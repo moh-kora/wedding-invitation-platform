@@ -1,43 +1,15 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { ArrowLeft, CalendarDays, Heart, Link2, MapPin, Music2, Share2 } from 'lucide-react';
+import './public.css';
 
-function formatDate(value) {
-  if (!value) return 'Your wedding day';
-  return new Intl.DateTimeFormat('en-GB', { day: '2-digit', month: 'long', year: 'numeric' }).format(new Date(`${value}T12:00:00`));
-}
-
-export default function PublicInvitation({ data, template = 'editorial', onBack }) {
-  const [now, setNow] = useState(Date.now());
-  const [musicOn, setMusicOn] = useState(false);
-  const [copied, setCopied] = useState(false);
-  useEffect(() => { const id = setInterval(() => setNow(Date.now()), 1000); return () => clearInterval(id); }, []);
-  const target = data.date ? new Date(`${data.date}T${data.time || '18:00'}:00`).getTime() : 0;
-  const diff = Math.max(0, target - now);
-  const units = [Math.floor(diff / 86400000), Math.floor(diff / 3600000) % 24, Math.floor(diff / 60000) % 60, Math.floor(diff / 1000) % 60];
-  const gallery = useMemo(() => (data.gallery || '').split(/\n|,/).map(x => x.trim()).filter(Boolean), [data.gallery]);
-  const share = async () => {
-    const url = window.location.href;
-    if (navigator.share) await navigator.share({ title: `${data.bride} & ${data.groom}`, text: 'Join us for our wedding celebration.', url });
-    else { await navigator.clipboard?.writeText(url); setCopied(true); setTimeout(() => setCopied(false), 1600); }
-  };
-  const calendar = () => {
-    const start = new Date(`${data.date}T${data.time || '18:00'}:00`);
-    const end = new Date(start.getTime() + 3 * 60 * 60 * 1000);
-    const fmt = d => d.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
-    const url = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(`${data.bride} & ${data.groom} Wedding`)}&dates=${fmt(start)}/${fmt(end)}&location=${encodeURIComponent(`${data.venue}, ${data.address}`)}&details=${encodeURIComponent(data.message || '')}`;
-    window.open(url, '_blank', 'noopener,noreferrer');
-  };
-  return <div className={`public-invitation theme-${template}`}>
-    <header className="public-bar"><button onClick={onBack}><ArrowLeft size={16}/> Everly</button><div className="public-actions"><button onClick={share}><Share2 size={16}/>{copied ? 'Copied' : 'Share'}</button>{data.music && <button onClick={() => setMusicOn(v => !v)}><Music2 size={16}/>{musicOn ? 'Music on' : 'Music'}</button>}</div></header>
-    <main className="public-card">
-      <section className="public-hero" style={data.cover ? { backgroundImage: `url(${data.cover})` } : {}}><div><span>WE ARE GETTING MARRIED</span><h1>{data.bride}<em>&</em>{data.groom}</h1><p>{formatDate(data.date)}</p></div></section>
-      <section className="public-content"><Heart className="public-heart" size={22} fill="currentColor"/><p className="public-message">{data.message}</p>
-        <div className="public-countdown">{units.map((n, i) => <div key={i}><b>{String(n).padStart(2, '0')}</b><span>{['Days', 'Hours', 'Minutes', 'Seconds'][i]}</span></div>)}</div>
-        <div className="public-event"><MapPin size={20}/><div><span>THE CELEBRATION</span><h2>{data.venue}</h2><p>{data.address}</p></div></div>
-        <div className="public-buttons"><button className="primary-btn" onClick={calendar}><CalendarDays size={16}/> Add to calendar</button>{data.map && <a className="outline-btn" href={data.map} target="_blank" rel="noreferrer"><MapPin size={16}/> View map</a>}{data.rsvp && <a className="outline-btn" href={`https://wa.me/${data.rsvp.replace(/[^0-9]/g, '')}`} target="_blank" rel="noreferrer"><Heart size={16}/> RSVP</a>}</div>
-        {gallery.length > 0 && <section className="public-gallery"><span>OUR STORY</span><h2>A few moments before forever.</h2><div>{gallery.map((src, i) => <img key={i} src={src} alt="Wedding gallery" loading="lazy" />)}</div></section>}
-        <footer className="public-footer"><Link2 size={15}/> Created with Everly</footer>
-      </section>
-    </main>
-  </div>;
+function formatDate(value) { if (!value) return 'Your wedding day'; return new Intl.DateTimeFormat('en-GB',{day:'2-digit',month:'long',year:'numeric'}).format(new Date(`${value}T12:00:00`)); }
+export default function PublicInvitation({data,template='editorial',onBack}){
+ const [now,setNow]=useState(Date.now()); const [musicOn,setMusicOn]=useState(false); const [copied,setCopied]=useState(false);
+ useEffect(()=>{const id=setInterval(()=>setNow(Date.now()),1000);return()=>clearInterval(id)},[]);
+ const target=data.date?new Date(`${data.date}T${data.time||'18:00'}:00`).getTime():0; const diff=Math.max(0,target-now);
+ const units=[Math.floor(diff/86400000),Math.floor(diff/3600000)%24,Math.floor(diff/60000)%60,Math.floor(diff/1000)%60];
+ const gallery=useMemo(()=>(data.gallery||'').split(/\n|,/).map(x=>x.trim()).filter(Boolean),[data.gallery]);
+ const share=async()=>{const url=window.location.href;if(navigator.share)await navigator.share({title:`${data.bride} & ${data.groom}`,text:'Join us for our wedding celebration.',url});else{await navigator.clipboard?.writeText(url);setCopied(true);setTimeout(()=>setCopied(false),1600)}};
+ const calendar=()=>{const start=new Date(`${data.date}T${data.time||'18:00'}:00`),end=new Date(start.getTime()+10800000),fmt=d=>d.toISOString().replace(/[-:]/g,'').replace(/\.\d{3}/,'');const url=`https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(`${data.bride} & ${data.groom} Wedding`)}&dates=${fmt(start)}/${fmt(end)}&location=${encodeURIComponent(`${data.venue}, ${data.address}`)}&details=${encodeURIComponent(data.message||'')}`;window.open(url,'_blank','noopener,noreferrer')};
+ return <div className={`public-invitation theme-${template}`}><header className="public-bar"><button onClick={onBack}><ArrowLeft size={16}/> Everly</button><div className="public-actions"><button onClick={share}><Share2 size={16}/>{copied?'Copied':'Share'}</button>{data.music&&<button onClick={()=>setMusicOn(v=>!v)}><Music2 size={16}/>{musicOn?'Music on':'Music'}</button>}</div></header><main className="public-card"><section className="public-hero" style={data.cover?{backgroundImage:`url(${data.cover})`}:{}}><div><span>WE ARE GETTING MARRIED</span><h1>{data.bride}<em>&</em>{data.groom}</h1><p>{formatDate(data.date)}</p></div></section><section className="public-content"><Heart className="public-heart" size={22} fill="currentColor"/><p className="public-message">{data.message}</p><div className="public-countdown">{units.map((n,i)=><div key={i}><b>{String(n).padStart(2,'0')}</b><span>{['Days','Hours','Minutes','Seconds'][i]}</span></div>)}</div><div className="public-event"><MapPin size={20}/><div><span>THE CELEBRATION</span><h2>{data.venue}</h2><p>{data.address}</p></div></div><div className="public-buttons"><button className="primary-btn" onClick={calendar}><CalendarDays size={16}/> Add to calendar</button>{data.map&&<a className="outline-btn" href={data.map} target="_blank" rel="noreferrer"><MapPin size={16}/> View map</a>}{data.rsvp&&<a className="outline-btn" href={`https://wa.me/${data.rsvp.replace(/[^0-9]/g,'')}`} target="_blank" rel="noreferrer">RSVP</a>}</div>{gallery.length>0&&<section className="public-gallery"><span>OUR STORY</span><h2>A few moments before forever.</h2><div>{gallery.map((src,i)=><img key={i} src={src} alt="Wedding gallery" loading="lazy"/>)}</div></section>}<footer className="public-footer"><Link2 size={15}/> Created with Everly</footer></section></main></div>
 }
