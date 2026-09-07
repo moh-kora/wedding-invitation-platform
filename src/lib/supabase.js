@@ -44,6 +44,18 @@ export async function submitRsvp(invitationId, rsvp) {
   return data?.[0] || data;
 }
 
+export async function listInvitationEvents(invitationId) {
+  if (!invitationId) return [];
+  return request(`/rest/v1/invitation_events?invitation_id=eq.${encodeURIComponent(invitationId)}&select=*&order=sort_order.asc,event_time.asc`);
+}
+export async function replaceInvitationEvents(invitationId, events = []) {
+  if (!invitationId) return [];
+  await request(`/rest/v1/invitation_events?invitation_id=eq.${encodeURIComponent(invitationId)}`, { method: 'DELETE' });
+  if (!events.length) return [];
+  const rows = events.map((event, index) => ({ invitation_id: invitationId, event_time: event.event_time?.trim() || '', title: event.title?.trim() || '', description: event.description?.trim() || null, sort_order: index }));
+  return request('/rest/v1/invitation_events', { method: 'POST', headers: { Prefer: 'return=representation' }, body: JSON.stringify(rows) });
+}
+
 function safeFileName(name = 'image') {
   const cleaned = name.toLowerCase().replace(/[^a-z0-9._-]+/g, '-').replace(/^-+|-+$/g, '');
   return cleaned || 'image';
