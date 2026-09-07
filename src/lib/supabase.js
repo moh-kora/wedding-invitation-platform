@@ -43,8 +43,62 @@ export async function submitRsvp(invitationId, rsvp) {
   const data = await request('/rest/v1/rsvps', { method: 'POST', headers: { Prefer: 'return=representation' }, body: JSON.stringify({ invitation_id: invitationId, guest_name: rsvp.name, attending: rsvp.attending === 'yes', guests_count: Number(rsvp.guests || 1), note: rsvp.note || null }) });
   return data?.[0] || data;
 }
-export async function upsertGallery(invitationId, urls = []) {
+
+function safeFileName(name = 'image') {
+  const cleaned = name.toLowerCase().replace(/[^a-z0-9._-]+/g, '-').replace(/^-+|-+$/g, '');
+  return cleaned || 'image';
+}
+
+export async function uploadInvitationMedia(file) {
+  if (!file) throw new Error('Please select an image.');
+  const session = getSession();
+  const user = session?.user?.id;
+  if (!user) throw new Error('Please sign in before uploading images.');
+  const { url, key } = config();
+  const filename = `${crypto.randomUUID()}-${safeFileName(file.name)}`;
+  const path = `${user}/${filename}`;
+  const response = await fetch(`${url}/storage/v1/object/invitation-media/${encodeURIComponent(user)}/${encodeURIComponent(filename)}`, {
+    method: 'POST',
+    headers: {
+      apikey: key,
+      Authorization: `Bearer ${session.access_token || key}`,
+      'Content-Type': file.type || 'application/octet-stream',
+      'x-upsert': 'false'
+    },
+    body: file
+  });
+  if (!response.ok) {
+    const text = await response.text();
+    let body = null; try { body = text ? JSON.parse(text) : null; } catch { body = text; }
+    throw new Error(body?.message || body?.error || body?.statusCode || 'Image upload failed.');
+  }
+  return {
+    path,
+    url: `${url}/storage/v1/object/public/invitation-media/${encodeURIComponent(user)}/${encodeURIComponent(filename)}`
+  };
+}
+
+export async function deleteInvitationMedia(path) {
+  if (!path) return;
+  const { url, key } = config();
+  const session = getSession();
+  const response = await fetch(`${url}/storage/v1/object/invitation-media`, {
+    method: 'DELETE',
+    headers: {
+      apikey: key,
+      Authorization: `Bearer ${session?.access_token || key}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ prefixes: [path] })
+  });
+  if (!response.ok) throw new Error('Image deletion failed.');
+}
+
+export async function replaceGallery(invitationId, urls = []) {
+  await request(`/rest/v1/invitation_gallery?invitation_id=eq.${encodeURIComponent(invitationId)}`, { method: 'DELETE' });
   if (!urls.length) return [];
   const rows = urls.map((url, index) => ({ invitation_id: invitationId, url, sort_order: index }));
   return request('/rest/v1/invitation_gallery', { method: 'POST', headers: { Prefer: 'return=representation' }, body: JSON.stringify(rows) });
 }
+
+export const upsertGallery = replaceGallery;
