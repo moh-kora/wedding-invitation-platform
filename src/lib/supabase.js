@@ -1,18 +1,29 @@
-const config = () => ({ url: (import.meta.env.VITE_SUPABASE_URL || 'https://zjyreqzmbmpmlnfobimh.supabase.co').replace(/\/$/, ''), key: import.meta.env.VITE_SUPABASE_ANON_KEY || 'sb_publishable_ZpYREdtQFDNK4jvs-qo6FA_r_ggiDET' });
-export const backendReady=()=>{const {url,key}=config();return Boolean(url&&key)};
+const config = () => ({
+  url: (import.meta.env.VITE_SUPABASE_URL || '').replace(/\/$/, ''),
+  key: import.meta.env.VITE_SUPABASE_ANON_KEY || import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY || ''
+});
+
+export const backendReady = () => {
+  const { url, key } = config();
+  return Boolean(url && key);
+};
+
 export function getSession(){try{return JSON.parse(localStorage.getItem('everly-supabase-session')||'null')}catch{return null}}
-export function setSession(s){if(s)localStorage.setItem('everly-supabase-session',JSON.stringify(s));else clearSession()}; export function clearSession(){localStorage.removeItem('everly-supabase-session')}
+export function setSession(s){if(s)localStorage.setItem('everly-supabase-session',JSON.stringify(s));else clearSession()}
+export function clearSession(){localStorage.removeItem('everly-supabase-session')}
+
 async function refreshSession(){const s=getSession(),r=s?.refresh_token;if(!r)return null;const {url,key}=config();const x=await fetch(`${url}/auth/v1/token?grant_type=refresh_token`,{method:'POST',headers:{apikey:key,'Content-Type':'application/json'},body:JSON.stringify({refresh_token:r})});if(!x.ok){clearSession();return null}const d=await x.json();setSession(d);return d}
 function expired(s){return s?.expires_at&&Number(s.expires_at)*1000<=Date.now()+30000}
-async function request(path,options={},retry=true){const {url,key}=config();let s=getSession();if(expired(s)&&s?.refresh_token)s=await refreshSession();const x=await fetch(`${url}${path}`,{...options,headers:{apikey:key,Authorization:`Bearer ${s?.access_token||key}`,...(options.body?{'Content-Type':'application/json'}:{}),...(options.headers||{})}});const t=await x.text();let b=null;try{b=t?JSON.parse(t):null}catch{b=t}if(!x.ok){if(retry&&x.status===401&&s?.refresh_token){const n=await refreshSession();if(n?.access_token)return request(path,options,false)}throw Error(b?.msg||b?.message||b?.error_description||b?.hint||'Request failed')}return b}
+
+async function request(path,options={},retry=true){const {url,key}=config();if(!url||!key)throw Error('Supabase is not configured.');let s=getSession();if(expired(s)&&s?.refresh_token)s=await refreshSession();const x=await fetch(`${url}${path}`,{...options,headers:{apikey:key,Authorization:`Bearer ${s?.access_token||key}`,...(options.body?{'Content-Type':'application/json'}:{}),...(options.headers||{})}});const t=await x.text();let b=null;try{b=t?JSON.parse(t):null}catch{b=t}if(!x.ok){if(retry&&x.status===401&&s?.refresh_token){const n=await refreshSession();if(n?.access_token)return request(path,options,false)}throw Error(b?.msg||b?.message||b?.error_description||b?.hint||'Request failed')}return b}
+
 export async function signIn(email,password){const d=await request('/auth/v1/token?grant_type=password',{method:'POST',body:JSON.stringify({email,password})});setSession(d);return d}
 export async function signUp(email,password,fullName){const d=await request('/auth/v1/signup',{method:'POST',body:JSON.stringify({email,password,data:{full_name:fullName}})});if(d?.access_token)setSession(d);return d}
 export async function signOut(){try{await request('/auth/v1/logout',{method:'POST'},false)}catch{}clearSession()}
 export async function listProducts(){return request('/rest/v1/products?active=eq.true&select=*,template_catalog(*)&order=price_aed.asc,name.asc')}
 export async function listMyProducts(){const u=getSession()?.user?.id;if(!u)return [];return request(`/rest/v1/user_products?user_id=eq.${encodeURIComponent(u)}&select=*,products(*)&order=purchased_at.desc`)}
 export async function canUseInvitationProduct(templateSlug='editorial'){const u=getSession()?.user?.id;if(!u)return false;try{return Boolean(await request('/rest/v1/rpc/can_use_invitation_product',{method:'POST',body:JSON.stringify({p_owner_id:u,p_template_slug:templateSlug})}))}catch{return false}}
-export async function createPendingOrder(productId){return request('/rest/v1/rpc/create_product_order',{method:'POST',body:JSON.stringify({p_product_id:productId})})}
-export async function confirmProductOrder(orderId,provider='manual',providerOrderId=''){return request('/rest/v1/rpc/confirm_product_order',{method:'POST',body:JSON.stringify({p_order_id:orderId,p_provider:provider,p_provider_order_id:providerOrderId})})}
+export async function createPendingOrder(productId){const d=await request('/rest/v1/rpc/create_product_order',{method:'POST',body:JSON.stringify({p_product_id:productId})});return d?.order_id?{id:d.order_id,product_id:d.product_id,total_aed:d.amount_aed,status:d.status}:d}
 export async function listMyOrders(){const u=getSession()?.user?.id;if(!u)return [];return request(`/rest/v1/orders?user_id=eq.${encodeURIComponent(u)}&select=*,order_items(*,products(*))&order=created_at.desc`)}
 export async function upsertCustomerProfile(p={}){const u=getSession()?.user?.id;if(!u)throw Error('Please sign in first.');const d=await request('/rest/v1/customer_profiles',{method:'POST',headers:{Prefer:'resolution=merge-duplicates,return=representation'},body:JSON.stringify({id:u,full_name:p.full_name||null,phone:p.phone||null,country:p.country||null,updated_at:new Date().toISOString()})});return d?.[0]||d}
 export async function listRsvpAnalytics(invitationId=null){const u=getSession()?.user?.id;if(!u)throw Error('Please sign in first.');return request(`/rest/v1/invitation_rsvp_analytics?owner_id=eq.${encodeURIComponent(u)}${invitationId?`&invitation_id=eq.${encodeURIComponent(invitationId)}`:''}&select=*`)}
