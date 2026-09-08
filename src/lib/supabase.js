@@ -60,6 +60,22 @@ export async function signOut() {
   clearSession();
 }
 
+export async function listPlans() { return request('/rest/v1/plans?active=eq.true&select=*&order=price_aed.asc'); }
+export async function listTemplates() { return request('/rest/v1/template_catalog?active=eq.true&select=*&order=is_premium.asc,price_aed.asc,name.asc'); }
+export async function getMySubscription() {
+  const user = getSession()?.user?.id;
+  if (!user) return null;
+  const rows = await request(`/rest/v1/subscriptions?user_id=eq.${encodeURIComponent(user)}&status=in.(trialing,active,past_due)&select=*,plans(*)&order=created_at.desc&limit=1`);
+  return rows?.[0] || null;
+}
+export async function upsertCustomerProfile(profile = {}) {
+  const user = getSession()?.user?.id;
+  if (!user) throw new Error('Please sign in first.');
+  const row = { id: user, full_name: profile.full_name || null, phone: profile.phone || null, country: profile.country || null, updated_at: new Date().toISOString() };
+  const data = await request('/rest/v1/customer_profiles', { method: 'POST', headers: { Prefer: 'resolution=merge-duplicates,return=representation' }, body: JSON.stringify(row) });
+  return data?.[0] || data;
+}
+
 export async function listInvitations() {
   const user = getSession()?.user?.id; if (!user) return [];
   return request(`/rest/v1/invitations?owner_id=eq.${encodeURIComponent(user)}&select=*,invitation_gallery(*),rsvps(*)&order=created_at.desc`);
