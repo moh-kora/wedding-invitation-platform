@@ -4,147 +4,31 @@ const config = () => ({
 });
 
 export const backendReady = () => { const { url, key } = config(); return Boolean(url && key); };
-
 export function getSession() { try { return JSON.parse(localStorage.getItem('everly-supabase-session') || 'null'); } catch { return null; } }
 export function setSession(session) { if (session) localStorage.setItem('everly-supabase-session', JSON.stringify(session)); else clearSession(); }
 export function clearSession() { localStorage.removeItem('everly-supabase-session'); }
-
-async function refreshSession() {
-  const current = getSession();
-  const refreshToken = current?.refresh_token;
-  if (!refreshToken) return null;
-  const { url, key } = config();
-  const response = await fetch(`${url}/auth/v1/token?grant_type=refresh_token`, {
-    method: 'POST',
-    headers: { apikey: key, 'Content-Type': 'application/json' },
-    body: JSON.stringify({ refresh_token: refreshToken })
-  });
-  if (!response.ok) { clearSession(); return null; }
-  const data = await response.json();
-  setSession(data);
-  return data;
-}
-
-function accessTokenExpired(session) {
-  if (!session?.expires_at) return false;
-  return Number(session.expires_at) * 1000 <= Date.now() + 30000;
-}
-
-async function request(path, options = {}, retry = true) {
-  const { url, key } = config();
-  if (!url || !key) throw new Error('Supabase is not configured.');
-  let session = getSession();
-  if (accessTokenExpired(session) && session?.refresh_token) session = await refreshSession();
-  const token = session?.access_token;
-  const response = await fetch(`${url}${path}`, {
-    ...options,
-    headers: { apikey: key, Authorization: `Bearer ${token || key}`, ...(options.body ? { 'Content-Type': 'application/json' } : {}), ...(options.headers || {}) }
-  });
-  const text = await response.text();
-  let body = null; try { body = text ? JSON.parse(text) : null; } catch { body = text; }
-  if (!response.ok) {
-    if (retry && response.status === 401 && session?.refresh_token) {
-      const refreshed = await refreshSession();
-      if (refreshed?.access_token) return request(path, options, false);
-    }
-    throw new Error(body?.msg || body?.message || body?.error_description || body?.hint || 'Request failed.');
-  }
-  return body;
-}
-
-export async function signIn(email, password) { const data = await request('/auth/v1/token?grant_type=password', { method: 'POST', body: JSON.stringify({ email, password }) }); setSession(data); return data; }
-export async function signUp(email, password, fullName) { const data = await request('/auth/v1/signup', { method: 'POST', body: JSON.stringify({ email, password, data: { full_name: fullName } }) }); if (data?.access_token) setSession(data); return data; }
-export async function signOut() {
-  const session = getSession();
-  try { if (session?.access_token) await request('/auth/v1/logout', { method: 'POST' }, false); } catch { /* local sign-out still succeeds */ }
-  clearSession();
-}
-
-export async function listPlans() { return request('/rest/v1/plans?active=eq.true&select=*&order=price_aed.asc'); }
-export async function listTemplates() { return request('/rest/v1/template_catalog?active=eq.true&select=*&order=is_premium.asc,price_aed.asc,name.asc'); }
-export async function getMySubscription() {
-  const user = getSession()?.user?.id;
-  if (!user) return null;
-  const rows = await request(`/rest/v1/subscriptions?user_id=eq.${encodeURIComponent(user)}&status=in.(trialing,active,past_due)&select=*,plans(*)&order=created_at.desc&limit=1`);
-  return rows?.[0] || null;
-}
-export async function upsertCustomerProfile(profile = {}) {
-  const user = getSession()?.user?.id;
-  if (!user) throw new Error('Please sign in first.');
-  const row = { id: user, full_name: profile.full_name || null, phone: profile.phone || null, country: profile.country || null, updated_at: new Date().toISOString() };
-  const data = await request('/rest/v1/customer_profiles', { method: 'POST', headers: { Prefer: 'resolution=merge-duplicates,return=representation' }, body: JSON.stringify(row) });
-  return data?.[0] || data;
-}
-
-export async function listInvitations() {
-  const user = getSession()?.user?.id; if (!user) return [];
-  return request(`/rest/v1/invitations?owner_id=eq.${encodeURIComponent(user)}&select=*,invitation_gallery(*),rsvps(*)&order=created_at.desc`);
-}
-export async function getInvitationBySlug(slug) {
-  const rows = await request(`/rest/v1/invitations?slug=eq.${encodeURIComponent(slug)}&published=eq.true&select=*,invitation_gallery(*),rsvps(*)`);
-  return rows?.[0] || null;
-}
-export async function createInvitation(payload) { const data = await request('/rest/v1/invitations', { method: 'POST', headers: { Prefer: 'return=representation' }, body: JSON.stringify(payload) }); return data?.[0] || data; }
-export async function updateInvitation(id, payload) { const data = await request(`/rest/v1/invitations?id=eq.${encodeURIComponent(id)}`, { method: 'PATCH', headers: { Prefer: 'return=representation' }, body: JSON.stringify({ ...payload, updated_at: new Date().toISOString() }) }); return data?.[0] || data; }
-export async function deleteInvitation(id) { await request(`/rest/v1/invitations?id=eq.${encodeURIComponent(id)}`, { method: 'DELETE' }); }
-export async function submitRsvp(invitationId, rsvp) {
-  const data = await request('/rest/v1/rsvps', { method: 'POST', headers: { Prefer: 'return=representation' }, body: JSON.stringify({ invitation_id: invitationId, guest_name: rsvp.name.trim(), attending: rsvp.attending === 'yes', guests_count: Math.min(20, Math.max(1, Number(rsvp.guests || 1))), note: rsvp.note?.trim() || null }) });
-  return data?.[0] || data;
-}
-
-export async function listInvitationEvents(invitationId) {
-  if (!invitationId) return [];
-  return request(`/rest/v1/invitation_events?invitation_id=eq.${encodeURIComponent(invitationId)}&select=*&order=sort_order.asc,event_time.asc`);
-}
-export async function replaceInvitationEvents(invitationId, events = []) {
-  if (!invitationId) return [];
-  await request(`/rest/v1/invitation_events?invitation_id=eq.${encodeURIComponent(invitationId)}`, { method: 'DELETE' });
-  if (!events.length) return [];
-  const rows = events.map((event, index) => ({ invitation_id: invitationId, event_time: event.event_time?.trim() || '', title: event.title?.trim() || '', description: event.description?.trim() || null, sort_order: index }));
-  return request('/rest/v1/invitation_events', { method: 'POST', headers: { Prefer: 'return=representation' }, body: JSON.stringify(rows) });
-}
-
-function safeFileName(name = 'image') {
-  const cleaned = name.toLowerCase().replace(/[^a-z0-9._-]+/g, '-').replace(/^-+|-+$/g, '');
-  return cleaned || 'image';
-}
-
-export async function uploadInvitationMedia(file) {
-  if (!file) throw new Error('Please select an image.');
-  if (!file.type?.startsWith('image/')) throw new Error('Only image files are supported.');
-  if (file.size > 8 * 1024 * 1024) throw new Error('Please choose an image smaller than 8 MB.');
-  const session = getSession();
-  const user = session?.user?.id;
-  if (!user) throw new Error('Please sign in before uploading images.');
-  const { url, key } = config();
-  const filename = `${crypto.randomUUID()}-${safeFileName(file.name)}`;
-  const path = `${user}/${filename}`;
-  const response = await fetch(`${url}/storage/v1/object/invitation-media/${encodeURIComponent(user)}/${encodeURIComponent(filename)}`, {
-    method: 'POST',
-    headers: { apikey: key, Authorization: `Bearer ${session.access_token || key}`, 'Content-Type': file.type, 'x-upsert': 'false' },
-    body: file
-  });
-  if (!response.ok) {
-    const text = await response.text();
-    let body = null; try { body = text ? JSON.parse(text) : null; } catch { body = text; }
-    throw new Error(body?.message || body?.error || body?.statusCode || 'Image upload failed.');
-  }
-  return { path, url: `${url}/storage/v1/object/public/invitation-media/${encodeURIComponent(user)}/${encodeURIComponent(filename)}` };
-}
-
-export async function deleteInvitationMedia(path) {
-  if (!path) return;
-  const { url, key } = config();
-  const session = getSession();
-  const response = await fetch(`${url}/storage/v1/object/invitation-media`, { method: 'DELETE', headers: { apikey: key, Authorization: `Bearer ${session?.access_token || key}`, 'Content-Type': 'application/json' }, body: JSON.stringify({ prefixes: [path] }) });
-  if (!response.ok) throw new Error('Image deletion failed.');
-}
-
-export async function replaceGallery(invitationId, urls = []) {
-  await request(`/rest/v1/invitation_gallery?invitation_id=eq.${encodeURIComponent(invitationId)}`, { method: 'DELETE' });
-  if (!urls.length) return [];
-  const rows = urls.map((url, index) => ({ invitation_id: invitationId, url, sort_order: index }));
-  return request('/rest/v1/invitation_gallery', { method: 'POST', headers: { Prefer: 'return=representation' }, body: JSON.stringify(rows) });
-}
-
-export const upsertGallery = replaceGallery;
+async function refreshSession() { const current=getSession(); const refreshToken=current?.refresh_token; if(!refreshToken)return null; const {url,key}=config(); const response=await fetch(`${url}/auth/v1/token?grant_type=refresh_token`,{method:'POST',headers:{apikey:key,'Content-Type':'application/json'},body:JSON.stringify({refresh_token:refreshToken})}); if(!response.ok){clearSession();return null;} const data=await response.json();setSession(data);return data; }
+function accessTokenExpired(session){if(!session?.expires_at)return false;return Number(session.expires_at)*1000<=Date.now()+30000;}
+async function request(path,options={},retry=true){const {url,key}=config();if(!url||!key)throw new Error('Supabase is not configured.');let session=getSession();if(accessTokenExpired(session)&&session?.refresh_token)session=await refreshSession();const token=session?.access_token;const response=await fetch(`${url}${path}`,{...options,headers:{apikey:key,Authorization:`Bearer ${token||key}`,...(options.body?{'Content-Type':'application/json'}:{}),...(options.headers||{})}});const text=await response.text();let body=null;try{body=text?JSON.parse(text):null}catch{body=text;}if(!response.ok){if(retry&&response.status===401&&session?.refresh_token){const refreshed=await refreshSession();if(refreshed?.access_token)return request(path,options,false);}throw new Error(body?.msg||body?.message||body?.error_description||body?.hint||'Request failed.');}return body;}
+export async function signIn(email,password){const data=await request('/auth/v1/token?grant_type=password',{method:'POST',body:JSON.stringify({email,password})});setSession(data);return data;}
+export async function signUp(email,password,fullName){const data=await request('/auth/v1/signup',{method:'POST',body:JSON.stringify({email,password,data:{full_name:fullName}})});if(data?.access_token)setSession(data);return data;}
+export async function signOut(){const session=getSession();try{if(session?.access_token)await request('/auth/v1/logout',{method:'POST'},false);}catch{}clearSession();}
+export async function listPlans(){return request('/rest/v1/plans?active=eq.true&select=*&order=price_aed.asc');}
+export async function listTemplates(){return request('/rest/v1/template_catalog?active=eq.true&select=*&order=is_premium.asc,price_aed.asc,name.asc');}
+export async function getMySubscription(){const user=getSession()?.user?.id;if(!user)return null;const rows=await request(`/rest/v1/subscriptions?user_id=eq.${encodeURIComponent(user)}&status=in.(trialing,active,past_due)&select=*,plans(*)&order=created_at.desc&limit=1`);return rows?.[0]||null;}
+export async function upsertCustomerProfile(profile={}){const user=getSession()?.user?.id;if(!user)throw new Error('Please sign in first.');const row={id:user,full_name:profile.full_name||null,phone:profile.phone||null,country:profile.country||null,updated_at:new Date().toISOString()};const data=await request('/rest/v1/customer_profiles',{method:'POST',headers:{Prefer:'resolution=merge-duplicates,return=representation'},body:JSON.stringify(row)});return data?.[0]||data;}
+export async function listRsvpAnalytics(invitationId=null){const user=getSession()?.user?.id;if(!user)throw new Error('Please sign in first.');const filter=invitationId?`&invitation_id=eq.${encodeURIComponent(invitationId)}`:'';return request(`/rest/v1/invitation_rsvp_analytics?owner_id=eq.${encodeURIComponent(user)}${filter}&select=*`);}
+export async function getInvitationRsvpAnalytics(invitationId){const rows=await listRsvpAnalytics(invitationId);return rows?.[0]||null;}
+export async function listInvitations(){const user=getSession()?.user?.id;if(!user)return [];return request(`/rest/v1/invitations?owner_id=eq.${encodeURIComponent(user)}&select=*,invitation_gallery(*),rsvps(*)&order=created_at.desc`);}
+export async function getInvitationBySlug(slug){const rows=await request(`/rest/v1/invitations?slug=eq.${encodeURIComponent(slug)}&published=eq.true&select=*,invitation_gallery(*),rsvps(*)`);return rows?.[0]||null;}
+export async function createInvitation(payload){const data=await request('/rest/v1/invitations',{method:'POST',headers:{Prefer:'return=representation'},body:JSON.stringify(payload)});return data?.[0]||data;}
+export async function updateInvitation(id,payload){const data=await request(`/rest/v1/invitations?id=eq.${encodeURIComponent(id)}`,{method:'PATCH',headers:{Prefer:'return=representation'},body:JSON.stringify({...payload,updated_at:new Date().toISOString()})});return data?.[0]||data;}
+export async function deleteInvitation(id){await request(`/rest/v1/invitations?id=eq.${encodeURIComponent(id)}`,{method:'DELETE'});}
+export async function submitRsvp(invitationId,rsvp){const data=await request('/rest/v1/rsvps',{method:'POST',headers:{Prefer:'return=representation'},body:JSON.stringify({invitation_id:invitationId,guest_name:rsvp.name.trim(),attending:rsvp.attending==='yes',guests_count:Math.min(20,Math.max(1,Number(rsvp.guests||1))),note:rsvp.note?.trim()||null})});return data?.[0]||data;}
+export async function listInvitationEvents(invitationId){if(!invitationId)return [];return request(`/rest/v1/invitation_events?invitation_id=eq.${encodeURIComponent(invitationId)}&select=*&order=sort_order.asc,event_time.asc`);}
+export async function replaceInvitationEvents(invitationId,events=[]){if(!invitationId)return [];await request(`/rest/v1/invitation_events?invitation_id=eq.${encodeURIComponent(invitationId)}`,{method:'DELETE'});if(!events.length)return [];const rows=events.map((event,index)=>({invitation_id:invitationId,event_time:event.event_time?.trim()||'',title:event.title?.trim()||'',description:event.description?.trim()||null,sort_order:index}));return request('/rest/v1/invitation_events',{method:'POST',headers:{Prefer:'return=representation'},body:JSON.stringify(rows)});}
+function safeFileName(name='image'){const cleaned=name.toLowerCase().replace(/[^a-z0-9._-]+/g,'-').replace(/^-+|-+$/g,'');return cleaned||'image';}
+export async function uploadInvitationMedia(file){if(!file)throw new Error('Please select an image.');if(!file.type?.startsWith('image/'))throw new Error('Only image files are supported.');if(file.size>8*1024*1024)throw new Error('Please choose an image smaller than 8 MB.');const session=getSession();const user=session?.user?.id;if(!user)throw new Error('Please sign in before uploading images.');const {url,key}=config();const filename=`${crypto.randomUUID()}-${safeFileName(file.name)}`;const path=`${user}/${filename}`;const response=await fetch(`${url}/storage/v1/object/invitation-media/${encodeURIComponent(user)}/${encodeURIComponent(filename)}`,{method:'POST',headers:{apikey:key,Authorization:`Bearer ${session.access_token||key}`,'Content-Type':file.type,'x-upsert':'false'},body:file});if(!response.ok){const text=await response.text();let body=null;try{body=text?JSON.parse(text):null}catch{body=text;}throw new Error(body?.message||body?.error||body?.statusCode||'Image upload failed.');}return {path,url:`${url}/storage/v1/object/public/invitation-media/${encodeURIComponent(user)}/${encodeURIComponent(filename)}`};}
+export async function deleteInvitationMedia(path){if(!path)return;const {url,key}=config();const session=getSession();const response=await fetch(`${url}/storage/v1/object/invitation-media`,{method:'DELETE',headers:{apikey:key,Authorization:`Bearer ${session?.access_token||key}`,'Content-Type':'application/json'},body:JSON.stringify({prefixes:[path]})});if(!response.ok)throw new Error('Image deletion failed.');}
+export async function replaceGallery(invitationId,urls=[]){await request(`/rest/v1/invitation_gallery?invitation_id=eq.${encodeURIComponent(invitationId)}`,{method:'DELETE'});if(!urls.length)return [];const rows=urls.map((url,index)=>({invitation_id:invitationId,url,sort_order:index}));return request('/rest/v1/invitation_gallery',{method:'POST',headers:{Prefer:'return=representation'},body:JSON.stringify(rows)});}
+export const upsertGallery=replaceGallery;
