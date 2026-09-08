@@ -2,7 +2,6 @@ const config = () => ({
   url: (import.meta.env.VITE_SUPABASE_URL || 'https://zjyreqzmbmpmlnfobimh.supabase.co').replace(/\/$/, ''),
   key: import.meta.env.VITE_SUPABASE_ANON_KEY || 'sb_publishable_ZpYREdtQFDNK4jvs-qo6FA_r_ggiDET'
 });
-
 export const backendReady = () => { const { url, key } = config(); return Boolean(url && key); };
 export function getSession() { try { return JSON.parse(localStorage.getItem('everly-supabase-session') || 'null'); } catch { return null; } }
 export function setSession(session) { if (session) localStorage.setItem('everly-supabase-session', JSON.stringify(session)); else clearSession(); }
@@ -16,9 +15,13 @@ export async function signOut(){const session=getSession();try{if(session?.acces
 export async function listPlans(){return request('/rest/v1/plans?active=eq.true&select=*&order=price_aed.asc');}
 export async function listTemplates(){return request('/rest/v1/template_catalog?active=eq.true&select=*&order=is_premium.asc,price_aed.asc,name.asc');}
 export async function getMySubscription(){const user=getSession()?.user?.id;if(!user)return null;const rows=await request(`/rest/v1/subscriptions?user_id=eq.${encodeURIComponent(user)}&status=in.(trialing,active,past_due)&select=*,plans(*)&order=created_at.desc&limit=1`);return rows?.[0]||null;}
+export async function getMyEntitlements(){const user=getSession()?.user?.id;if(!user)return null;const rows=await request('/rest/v1/rpc/get_my_entitlements',{method:'POST',body:'{}'});return rows?.[0]||rows||null;}
 export async function upsertCustomerProfile(profile={}){const user=getSession()?.user?.id;if(!user)throw new Error('Please sign in first.');const row={id:user,full_name:profile.full_name||null,phone:profile.phone||null,country:profile.country||null,updated_at:new Date().toISOString()};const data=await request('/rest/v1/customer_profiles',{method:'POST',headers:{Prefer:'resolution=merge-duplicates,return=representation'},body:JSON.stringify(row)});return data?.[0]||data;}
 export async function listRsvpAnalytics(invitationId=null){const user=getSession()?.user?.id;if(!user)throw new Error('Please sign in first.');const filter=invitationId?`&invitation_id=eq.${encodeURIComponent(invitationId)}`:'';return request(`/rest/v1/invitation_rsvp_analytics?owner_id=eq.${encodeURIComponent(user)}${filter}&select=*`);}
 export async function getInvitationRsvpAnalytics(invitationId){const rows=await listRsvpAnalytics(invitationId);return rows?.[0]||null;}
+export async function listCustomDomains(){const user=getSession()?.user?.id;if(!user)return [];return request(`/rest/v1/custom_domains?user_id=eq.${encodeURIComponent(user)}&select=*&order=created_at.desc`);}
+export async function createCustomDomain(domain,invitationId=null){const user=getSession()?.user?.id;if(!user)throw new Error('Please sign in first.');const data=await request('/rest/v1/custom_domains',{method:'POST',headers:{Prefer:'return=representation'},body:JSON.stringify({user_id:user,domain:domain.trim().toLowerCase(),invitation_id:invitationId||null})});return data?.[0]||data;}
+export async function deleteCustomDomain(id){await request(`/rest/v1/custom_domains?id=eq.${encodeURIComponent(id)}`,{method:'DELETE'});}
 export async function listInvitations(){const user=getSession()?.user?.id;if(!user)return [];return request(`/rest/v1/invitations?owner_id=eq.${encodeURIComponent(user)}&select=*,invitation_gallery(*),rsvps(*)&order=created_at.desc`);}
 export async function getInvitationBySlug(slug){const rows=await request(`/rest/v1/invitations?slug=eq.${encodeURIComponent(slug)}&published=eq.true&select=*,invitation_gallery(*),rsvps(*)`);return rows?.[0]||null;}
 export async function createInvitation(payload){const data=await request('/rest/v1/invitations',{method:'POST',headers:{Prefer:'return=representation'},body:JSON.stringify(payload)});return data?.[0]||data;}
