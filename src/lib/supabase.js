@@ -10,6 +10,7 @@ export async function signUp(email,password,fullName){const d=await request('/au
 export async function signOut(){try{await request('/auth/v1/logout',{method:'POST'},false)}catch{}clearSession()}
 export async function listProducts(){return request('/rest/v1/products?active=eq.true&select=*,template_catalog(*)&order=price_aed.asc,name.asc')}
 export async function listMyProducts(){const u=getSession()?.user?.id;if(!u)return [];return request(`/rest/v1/user_products?user_id=eq.${encodeURIComponent(u)}&select=*,products(*)&order=purchased_at.desc`)}
+export async function canUseInvitationProduct(templateSlug='editorial'){const u=getSession()?.user?.id;if(!u)return false;try{return Boolean(await request('/rest/v1/rpc/can_use_invitation_product',{method:'POST',body:JSON.stringify({p_owner_id:u,p_template_slug:templateSlug})}))}catch{return false}}
 export async function createPendingOrder(productId){return request('/rest/v1/rpc/create_product_order',{method:'POST',body:JSON.stringify({p_product_id:productId})})}
 export async function confirmProductOrder(orderId,provider='manual',providerOrderId=''){return request('/rest/v1/rpc/confirm_product_order',{method:'POST',body:JSON.stringify({p_order_id:orderId,p_provider:provider,p_provider_order_id:providerOrderId})})}
 export async function listMyOrders(){const u=getSession()?.user?.id;if(!u)return [];return request(`/rest/v1/orders?user_id=eq.${encodeURIComponent(u)}&select=*,order_items(*,products(*))&order=created_at.desc`)}
