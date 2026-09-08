@@ -1,22 +1,17 @@
 const config = () => ({
-  url: (import.meta.env.VITE_SUPABASE_URL || '').replace(/\/$/, ''),
-  key: import.meta.env.VITE_SUPABASE_ANON_KEY || import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY || ''
+  // Supabase publishable keys are intended for browser use. Keep the public fallback
+  // only because GitHub Pages is a static build with no runtime environment variables.
+  url: (import.meta.env.VITE_SUPABASE_URL || 'https://zjyreqzmbmpmlnfobimh.supabase.co').replace(/\/$/, ''),
+  key: import.meta.env.VITE_SUPABASE_ANON_KEY || import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY || 'sb_publishable_ZpYREdtQFDNK4jvs-qo6FA_r_ggiDET'
 });
 
-export const backendReady = () => {
-  const { url, key } = config();
-  return Boolean(url && key);
-};
-
+export const backendReady = () => { const { url, key } = config(); return Boolean(url && key); };
 export function getSession(){try{return JSON.parse(localStorage.getItem('everly-supabase-session')||'null')}catch{return null}}
 export function setSession(s){if(s)localStorage.setItem('everly-supabase-session',JSON.stringify(s));else clearSession()}
 export function clearSession(){localStorage.removeItem('everly-supabase-session')}
-
 async function refreshSession(){const s=getSession(),r=s?.refresh_token;if(!r)return null;const {url,key}=config();const x=await fetch(`${url}/auth/v1/token?grant_type=refresh_token`,{method:'POST',headers:{apikey:key,'Content-Type':'application/json'},body:JSON.stringify({refresh_token:r})});if(!x.ok){clearSession();return null}const d=await x.json();setSession(d);return d}
 function expired(s){return s?.expires_at&&Number(s.expires_at)*1000<=Date.now()+30000}
-
-async function request(path,options={},retry=true){const {url,key}=config();if(!url||!key)throw Error('Supabase is not configured.');let s=getSession();if(expired(s)&&s?.refresh_token)s=await refreshSession();const x=await fetch(`${url}${path}`,{...options,headers:{apikey:key,Authorization:`Bearer ${s?.access_token||key}`,...(options.body?{'Content-Type':'application/json'}:{}),...(options.headers||{})}});const t=await x.text();let b=null;try{b=t?JSON.parse(t):null}catch{b=t}if(!x.ok){if(retry&&x.status===401&&s?.refresh_token){const n=await refreshSession();if(n?.access_token)return request(path,options,false)}throw Error(b?.msg||b?.message||b?.error_description||b?.hint||'Request failed')}return b}
-
+async function request(path,options={},retry=true){const {url,key}=config();let s=getSession();if(expired(s)&&s?.refresh_token)s=await refreshSession();const x=await fetch(`${url}${path}`,{...options,headers:{apikey:key,Authorization:`Bearer ${s?.access_token||key}`,...(options.body?{'Content-Type':'application/json'}:{}),...(options.headers||{})}});const t=await x.text();let b=null;try{b=t?JSON.parse(t):null}catch{b=t}if(!x.ok){if(retry&&x.status===401&&s?.refresh_token){const n=await refreshSession();if(n?.access_token)return request(path,options,false)}throw Error(b?.msg||b?.message||b?.error_description||b?.hint||'Request failed')}return b}
 export async function signIn(email,password){const d=await request('/auth/v1/token?grant_type=password',{method:'POST',body:JSON.stringify({email,password})});setSession(d);return d}
 export async function signUp(email,password,fullName){const d=await request('/auth/v1/signup',{method:'POST',body:JSON.stringify({email,password,data:{full_name:fullName}})});if(d?.access_token)setSession(d);return d}
 export async function signOut(){try{await request('/auth/v1/logout',{method:'POST'},false)}catch{}clearSession()}
