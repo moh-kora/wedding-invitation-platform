@@ -1,0 +1,77 @@
+/* Final composition polish — Mohamed & Laila */
+.j-page{background:#fbf6f0;color:#24161a}
+.j-page main>section{isolation:isolate}
+.j-page main>section:not(.j-hero):not(.story):not(.venue):not(.rsvp-banner):not(.thanks){padding-inline:20px}
+.j-page .intro,.j-page .events,.j-page .countdown,.j-page .reveal-section,.j-page .gallery,.j-page .guestbook,.j-page .faq{overflow:hidden}
+
+/* Clear editorial hierarchy */
+.j-page .eyebrow{font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:var(--gold,#d3ae68);font-size:.7rem}
+.j-page h2{font-weight:500;letter-spacing:-.035em}
+.j-page h2 i{font-weight:400}
+.j-page section>p{font-size:1rem}
+
+/* Hero breathing room and focus */
+.j-page .j-hero{overflow:hidden;background-position:center;background-size:cover}
+.j-page .j-hero .hero-inner{position:relative;z-index:2}
+.j-page .j-hero .couple-art{height:190px;width:320px;transform:scale(.88);margin-bottom:-2px}
+.j-page .j-hero .hero-copy{opacity:.9}
+.j-page .j-hero .scroll-link{display:inline-flex;align-items:center;justify-content:center;min-height:40px;padding:8px 18px;border:1px solid rgba(211,174,104,.35);border-radius:999px;text-decoration:none}
+
+/* Heritage section */
+.j-page .jertiq-heritage,.j-page .heritage{position:relative;z-index:1}
+
+/* Story cards */
+.j-page .story-copy h2{font-size:clamp(42px,5vw,64px)!important}
+.j-page .story-points span{display:flex;align-items:center;gap:12px;line-height:1.5}
+.j-page .story-points b{flex:0 0 auto;letter-spacing:.12em;color:var(--gold,#d3ae68)}
+
+/* Event cards — consistent rhythm */
+.j-page .event-list{align-items:stretch}
+.j-page .event-card{border-radius:18px;overflow:hidden}
+.j-page .event-card .couple-art{height:175px;flex-basis:175px;margin-bottom:4px}
+.j-page .event-card .event-copy{padding-top:12px}
+
+/* Countdown */
+.j-page .count-grid{gap:14px}
+.j-page .count-grid div{border-radius:16px;min-height:118px;display:flex;flex-direction:column;justify-content:center;align-items:center}
+.j-page .count-grid strong{line-height:1;font-variant-numeric:tabular-nums}
+.j-page .count-grid span{margin-top:9px;letter-spacing:.12em;text-transform:uppercase;font-size:.68rem}
+
+/* Reveal */
+.j-page .scratch-card{border-radius:20px;overflow:hidden;box-shadow:0 22px 60px rgba(40,15,22,.16)}
+.j-page .scratch-hint{opacity:.65;margin-top:12px}
+
+/* Venue / travel / family */
+.j-page .venue{overflow:hidden}
+.j-page .travel-card,.j-page .family-card{border-radius:16px}
+
+/* Gallery */
+.j-page .gallery-grid{gap:12px}
+.j-page .gallery-grid button{position:relative;border:0;padding:0;overflow:hidden;border-radius:14px;cursor:pointer;background:#eadfd6}
+.j-page .gallery-grid button img{transition:transform .7s cubic-bezier(.2,.7,.2,1)}
+.j-page .gallery-grid button span{position:absolute;left:12px;bottom:12px;padding:6px 10px;border-radius:999px;background:rgba(20,8,13,.65);color:#fff;font-size:.68rem;opacity:0;transform:translateY(5px);transition:.3s}
+.j-page .gallery-grid button:hover img{transform:scale(1.04)}
+.j-page .gallery-grid button:hover span,.j-page .gallery-grid button:focus-visible span{opacity:1;transform:none}
+
+/* Guestbook / FAQ */
+.j-page .guestbook-layout{align-items:start}
+.j-page .guestbook-layout form{padding:24px}
+.j-page .guest-messages article{border-radius:14px;padding:18px}
+.j-page .faq-row{border-bottom:1px solid rgba(60,25,30,.12)}
+
+/* Mobile: preserve hierarchy, avoid crowded hero */
+@media(max-width:700px){
+ .j-page main>section:not(.j-hero):not(.story):not(.venue):not(.rsvp-banner):not(.thanks){padding-inline:16px}
+ .j-page .j-hero .hero-inner{padding-inline:16px}
+ .j-page .j-hero .couple-art{height:138px;width:260px;transform:scale(.74)}
+ .j-page .j-hero .hero-copy{max-width:340px}
+ .j-page .story-copy h2{font-size:clamp(36px,11vw,48px)!important}
+ .j-page .count-grid div{min-height:100px;border-radius:13px}
+ .j-page .gallery-grid button{border-radius:10px}
+ .j-page .gallery-grid button span{opacity:1;transform:none}
+}
+@media(max-width:390px){
+ .j-page .j-hero .couple-art{transform:scale(.66);height:122px}
+ .j-page .j-hero .hero-copy{font-size:.86rem}
+}
+@media(prefers-reduced-motion:reduce){.j-page .gallery-grid button img{transition:none}}
