@@ -1,0 +1,145 @@
+/* Mohamed & Laila — final visual composition layer */
+:root{--j-space:clamp(76px,9vw,128px);--j-content:min(1180px,calc(100% - 40px));--j-copy:min(680px,100%)}
+.j-page{width:100%;overflow-x:hidden;background:#fbf6f0}
+.j-page main{width:100%;overflow:clip}
+.j-page main>section{position:relative}
+.j-page main>section:not(.story):not(.venue):not(.rsvp-banner):not(.thanks){padding-top:var(--j-space);padding-bottom:var(--j-space)}
+.j-page .eyebrow{display:block;margin:0 0 14px;line-height:1.4;white-space:normal}
+.j-page h2{max-width:900px;margin:0 auto 22px;line-height:1.05!important;letter-spacing:-.035em}
+.j-page section>p{max-width:var(--j-copy);margin:0 auto;line-height:1.85}
+
+/* Navigation */
+.j-page .j-nav{height:64px;min-height:64px;padding-inline:clamp(16px,4vw,54px);gap:18px}
+.j-page .j-nav>div{min-width:0;overflow-x:auto;scrollbar-width:none}
+.j-page .j-nav>div::-webkit-scrollbar{display:none}
+.j-page .j-nav button{flex:0 0 auto}
+
+/* Hero: one clear focal point */
+.j-page .j-hero{min-height:calc(100svh - 64px);padding:0!important}
+.j-page .j-hero:before{inset:14px}
+.j-page .j-hero:after{inset:27px}
+.j-page .j-hero .hero-inner{width:min(900px,100%);padding:54px 24px 70px;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.j-page .j-hero .monogram{width:70px;height:70px;margin-bottom:24px}
+.j-page .j-hero .couple-art{height:155px;width:280px;margin:0 auto 2px;transform:scale(.84)}
+.j-page .j-hero h1{margin:8px auto 14px!important}
+.j-page .j-hero .j-ornament{margin:14px auto}
+.j-page .j-hero .arabic{margin:12px auto 4px}
+.j-page .j-hero .hero-copy{margin:8px auto 0;max-width:560px;line-height:1.75}
+.j-page .j-hero .scroll-link{margin-top:26px}
+
+/* Intro / heritage */
+.j-page .intro{text-align:center;background:#fbf6f0}
+.j-page .intro>p{max-width:650px}
+.j-page .jertiq-heritage,.j-page .heritage{max-width:var(--j-content);margin:0 auto}
+
+/* Story */
+.j-page .story{min-height:560px;grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:stretch}
+.j-page .story-copy{padding:clamp(60px,7vw,100px) clamp(26px,7vw,100px)}
+.j-page .story-copy h2{margin-left:0;margin-right:0}
+.j-page .story-copy p{max-width:560px}
+.j-page .story-points{max-width:540px}
+.j-page .story>.section-dark{min-height:560px;display:grid;place-items:center;overflow:hidden}
+
+/* Events */
+.j-page .events{text-align:center;background:#fffaf6}
+.j-page .event-list{width:var(--j-content);margin:42px auto 0;gap:18px}
+.j-page .event-card{min-width:0;min-height:360px;display:flex;flex-direction:column;padding:24px}
+.j-page .event-card .couple-art{flex:0 0 170px}
+.j-page .event-copy{margin-top:auto}
+.j-page .event-copy h3{line-height:1.15!important;margin:8px 0 10px}
+.j-page .event-copy p{margin:0;line-height:1.7}
+
+/* Countdown */
+.j-page .countdown{min-height:460px;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.j-page .count-grid{width:min(720px,100%);margin-top:38px}
+.j-page .count-grid div{min-width:0}
+
+/* Reveal */
+.j-page .reveal-section{display:flex;flex-direction:column;align-items:center;text-align:center}
+.j-page .scratch-card{width:min(520px,calc(100vw - 40px));height:280px;margin:34px auto 0}
+
+/* Shared split sections */
+.j-page .venue{grid-template-columns:minmax(0,1fr) minmax(0,1fr);min-height:520px}
+.j-page .venue-copy{padding:clamp(58px,7vw,100px) clamp(24px,7vw,100px)}
+.j-page .venue-copy h2{margin-left:0;margin-right:0}
+.j-page .venue-copy>p{margin-left:0}
+.j-page .venue .button-row{margin-top:24px}
+
+/* Travel / family */
+.j-page .travel,.j-page .family,.j-page .guestbook,.j-page .faq{width:100%;text-align:center}
+.j-page .travel-grid,.j-page .family-grid{width:min(1050px,100%);margin:40px auto 0;gap:18px}
+.j-page .travel-card,.j-page .family-card{min-height:170px;display:flex;flex-direction:column;justify-content:center}
+
+/* RSVP */
+.j-page .rsvp-banner{padding:clamp(70px,8vw,110px) 20px!important;text-align:center}
+.j-page .rsvp-modal{width:min(540px,calc(100vw - 32px));border-radius:4px}
+
+/* Gallery */
+.j-page .gallery{text-align:center}
+.j-page .gallery>p{margin-bottom:34px}
+.j-page .gallery-grid{width:min(1120px,calc(100% - 40px));margin-inline:auto}
+.j-page .gallery-card{min-width:0;overflow:hidden}
+.j-page .gallery-card img{width:100%;height:100%;display:block;object-fit:cover}
+
+/* Guestbook */
+.j-page .guestbook-layout{width:min(1080px,100%);margin:40px auto 0}
+.j-page .guestbook-layout form{border-radius:3px}
+.j-page .guest-messages{min-width:0}
+
+/* FAQ */
+.j-page .faq-row{width:min(900px,100%);margin:32px auto 0}
+.j-page .faq-row button{padding:18px 4px;line-height:1.4}
+
+/* Thank you */
+.j-page .thanks{text-align:center;padding:clamp(85px,10vw,130px) 20px!important}
+.j-page .thanks h2{margin-bottom:10px}
+
+/* Decorative restraint */
+.j-page main section:before,.j-page main section:after{pointer-events:none}
+.j-page .j-pattern{opacity:.045}
+.j-page .j-ornament i{width:58px}
+
+@media(max-width:900px){
+ .j-page .story{grid-template-columns:1fr;min-height:0}
+ .j-page .story>.section-dark{min-height:420px;order:-1}
+ .j-page .story-copy{padding:70px 28px}
+ .j-page .event-list{grid-template-columns:1fr 1fr}
+ .j-page .venue{grid-template-columns:1fr}
+ .j-page .venue-copy{padding:70px 28px}
+ .j-page .venue .venue-art,.j-page .venue .map{min-height:360px}
+ .j-page .travel-grid{grid-template-columns:1fr 1fr}
+ .j-page .guestbook-layout{grid-template-columns:1fr}
+}
+@media(max-width:700px){
+ :root{--j-content:calc(100% - 32px);--j-space:64px}
+ .j-page main>section:not(.story):not(.venue):not(.rsvp-banner):not(.thanks){padding-top:64px;padding-bottom:64px}
+ .j-page .j-nav{padding-inline:12px}
+ .j-page .j-hero{min-height:calc(100svh - 64px)}
+ .j-page .j-hero .hero-inner{padding:38px 18px 52px}
+ .j-page .j-hero .monogram{width:60px;height:60px;margin-bottom:18px}
+ .j-page .j-hero .couple-art{height:120px;width:240px;transform:scale(.72);margin-bottom:-4px}
+ .j-page .j-hero .hero-copy{font-size:14px;line-height:1.7}
+ .j-page .j-hero .scroll-link{margin-top:20px}
+ .j-page h2{font-size:clamp(34px,10vw,46px)!important}
+ .j-page .story>.section-dark{min-height:330px}
+ .j-page .story-copy{padding:58px 20px}
+ .j-page .story-points{grid-template-columns:1fr;gap:0}
+ .j-page .event-list,.j-page .travel-grid,.j-page .family-grid{grid-template-columns:1fr;width:calc(100% - 32px)}
+ .j-page .event-card{min-height:330px}
+ .j-page .count-grid{grid-template-columns:repeat(2,1fr);margin-top:28px}
+ .j-page .count-grid div{padding:22px 8px}
+ .j-page .count-grid strong{font-size:40px}
+ .j-page .scratch-card{height:245px}
+ .j-page .venue-copy{padding:58px 20px}
+ .j-page .venue .venue-art,.j-page .venue .map{min-height:280px}
+ .j-page .gallery-grid{width:calc(100% - 32px)}
+ .j-page .guestbook-layout{width:calc(100% - 32px)}
+ .j-page .thanks{padding:70px 16px!important}
+}
+@media(max-width:390px){
+ .j-page .j-hero .hero-inner{padding-inline:14px}
+ .j-page .j-hero .couple-art{transform:scale(.64)}
+ .j-page .event-card{padding:20px}
+ .j-page .count-grid strong{font-size:34px}
+}
+@media(prefers-reduced-motion:reduce){.j-page *{scroll-behavior:auto!important}}
