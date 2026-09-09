@@ -1,0 +1,44 @@
+/* Final mobile polish — Mohamed & Laila */
+@media (max-width: 700px){
+  .j-page{overflow-x:hidden}
+  .j-nav{padding:12px 14px;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
+  .j-nav button{min-height:40px;padding:0 11px}
+  .j-hero{min-height:100svh;min-height:100dvh}
+  .hero-inner{width:min(100%,620px);padding:84px 20px 34px}
+  .hero-inner .monogram{margin-bottom:10px}
+  .j-hero .couple-art{transform:scale(.82);transform-origin:center bottom;top:7%;bottom:auto}
+  .j-hero h1{font-size:clamp(42px,13vw,72px);line-height:.9;letter-spacing:-.045em;margin:8px 0 12px}
+  .j-hero h1 em{font-size:.55em;margin:0 5px}
+  .hero-date{font-size:13px;letter-spacing:.14em}
+  .hero-copy{max-width:330px;font-size:14px;line-height:1.75}
+  .scroll-link{margin-top:18px}
+  .jertiq-heritage,.reveal-section,.countdown,.gallery,.guestbook,.faq{padding-left:18px!important;padding-right:18px!important}
+  .jh-inner{display:block!important}
+  .jh-intro{margin-bottom:30px}
+  .jh-grid{grid-template-columns:1fr!important;gap:12px!important}
+  .jh-card{padding:22px!important}
+  .count-grid{grid-template-columns:repeat(2,1fr)!important;gap:10px!important}
+  .count-grid>div{padding:18px 8px!important}
+  .count-grid strong{font-size:34px!important}
+  .gallery-grid{grid-template-columns:1fr 1fr!important;gap:8px!important}
+  .gallery-grid button:first-child{grid-column:1 / -1}
+  .gallery-grid img{height:170px!important}
+  .guestbook-layout{grid-template-columns:1fr!important;gap:26px!important}
+  .guest-messages{max-height:none!important}
+  .rsvp-modal{width:calc(100vw - 28px)!important;max-height:88svh;overflow:auto;padding:24px 18px!important;border-radius:20px!important}
+  .rsvp-modal input,.rsvp-modal select,.rsvp-modal textarea{font-size:16px!important;min-height:46px}
+  .rsvp-modal textarea{min-height:100px}
+  .faq-row button{min-height:56px;padding:14px 2px!important}
+  .faq-row p{padding:0 2px 16px!important;line-height:1.75}
+  .scratch-card{width:min(100%,360px)!important;height:220px!important}
+  .j-page a,.j-page button{touch-action:manipulation}
+}
+@media (max-width:380px){
+  .j-nav>div{gap:4px!important}
+  .j-nav button{padding:0 8px;font-size:11px}
+  .j-hero .couple-art{transform:scale(.7)}
+  .gallery-grid img{height:145px!important}
+}
+@media (prefers-reduced-motion: reduce){
+  .j-page *{scroll-behavior:auto!important;animation-duration:.01ms!important;transition-duration:.01ms!important}
+}
