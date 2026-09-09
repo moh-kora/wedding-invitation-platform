@@ -1,0 +1,94 @@
+/* Mohamed & Laila — supplied Sudanese illustration artwork */
+
+.j-page .couple-art{
+  position:relative;
+  isolation:isolate;
+  min-height:clamp(250px,34vw,430px);
+  display:flex;
+  align-items:flex-end;
+  justify-content:center;
+  gap:clamp(4px,2vw,24px);
+  overflow:hidden;
+}
+
+/* Replace the earlier CSS-drawn couple with the supplied illustrations. */
+.j-page .couple-art .person,
+.j-page .couple-art .art-halo,
+.j-page .couple-art .art-beads,
+.j-page .couple-art .art-flower,
+.j-page .couple-art .art-star{
+  display:none!important;
+}
+
+.j-page .couple-art:before,
+.j-page .couple-art:after{
+  content:"";
+  display:block;
+  position:relative;
+  z-index:2;
+  width:min(43%,330px);
+  height:clamp(230px,31vw,410px);
+  background-repeat:no-repeat;
+  background-position:center bottom;
+  background-size:contain;
+  filter:drop-shadow(0 22px 28px rgba(35,5,13,.16));
+  transition:transform .65s cubic-bezier(.2,.8,.2,1),filter .65s ease;
+}
+
+.j-page .couple-art:before{
+  background-image:url('/wedding-invitation-platform/The%20bride.png');
+}
+
+.j-page .couple-art:after{
+  background-image:url('/wedding-invitation-platform/groom.png');
+}
+
+.j-page .couple-art:hover:before{transform:translateY(-7px) rotate(-1deg);filter:drop-shadow(0 28px 34px rgba(35,5,13,.20))}
+.j-page .couple-art:hover:after{transform:translateY(-9px) rotate(1deg);filter:drop-shadow(0 28px 34px rgba(35,5,13,.20))}
+
+/* A subtle luxury stage behind the supplied artwork. */
+.j-page .couple-art:global{background:transparent}
+.j-page .couple-art:after{margin-left:-3%;}
+
+.j-page .j-hero .couple-art{
+  width:min(100%,760px);
+  margin:clamp(10px,2vw,24px) auto clamp(6px,1vw,14px);
+  min-height:clamp(245px,34vw,420px);
+}
+
+.j-page .j-hero .couple-art:before,
+.j-page .j-hero .couple-art:after{
+  width:min(44%,340px);
+  height:clamp(230px,32vw,405px);
+}
+
+/* Event illustrations become a signature visual for each ceremony card. */
+.j-page .event-card .couple-art,
+.j-page .event .couple-art,
+.j-page .events .couple-art{
+  min-height:220px;
+}
+
+.j-page .event-card .couple-art:before,
+.j-page .event-card .couple-art:after,
+.j-page .event .couple-art:before,
+.j-page .event .couple-art:after,
+.j-page .events .couple-art:before,
+.j-page .events .couple-art:after{
+  height:210px;
+}
+
+/* If an event layout is tight, keep the illustrations elegant rather than cropped. */
+@media(max-width:700px){
+  .j-page .couple-art{min-height:230px;gap:0}
+  .j-page .couple-art:before,
+  .j-page .couple-art:after{width:47%;height:225px}
+  .j-page .j-hero .couple-art{min-height:245px;margin-top:4px}
+  .j-page .j-hero .couple-art:before,
+  .j-page .j-hero .couple-art:after{height:235px}
+}
+
+@media(prefers-reduced-motion:reduce){
+  .j-page .couple-art:before,
+  .j-page .couple-art:after{transition:none}
+}
