@@ -1,0 +1,124 @@
+/* Mohamed & Laila — cinematic Sudanese Jertiq hero */
+.j-page .j-hero{
+  position:relative;
+  min-height:100svh;
+  overflow:hidden;
+  display:grid;
+  place-items:center;
+  isolation:isolate;
+  background-color:#240711;
+}
+.j-page .j-hero::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:0;
+  background:
+    radial-gradient(circle at 50% 18%,rgba(238,207,151,.18),transparent 23%),
+    radial-gradient(circle at 18% 58%,rgba(142,24,50,.28),transparent 30%),
+    radial-gradient(circle at 82% 60%,rgba(211,174,104,.10),transparent 28%),
+    linear-gradient(180deg,rgba(15,2,7,.08),rgba(15,2,7,.35) 55%,rgba(15,2,7,.92));
+  pointer-events:none;
+}
+.j-page .j-hero::after{
+  content:"";
+  position:absolute;
+  inset:18px;
+  z-index:1;
+  border:1px solid rgba(240,217,161,.25);
+  pointer-events:none;
+  box-shadow:inset 0 0 80px rgba(216,182,108,.035);
+}
+.j-page .j-hero .j-pattern{opacity:.18;z-index:0}
+.j-page .j-hero .hero-inner{
+  width:min(94vw,980px);
+  min-height:100svh;
+  padding:clamp(86px,10vh,110px) 0 clamp(38px,6vh,64px);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  position:relative;
+  z-index:3;
+}
+.j-page .j-hero .monogram{
+  width:56px;
+  height:56px;
+  flex:0 0 56px;
+  margin:0 auto 8px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  color:#f0d9a1;
+  font-family:Georgia,serif;
+  font-size:15px;
+  letter-spacing:.08em;
+  background:rgba(20,4,10,.32);
+  border:1px solid rgba(240,217,161,.5);
+  backdrop-filter:blur(8px);
+}
+.j-page .j-hero .couple-art{
+  order:2;
+  margin:clamp(5px,1vh,12px) auto 0;
+  width:min(94vw,760px);
+  min-height:clamp(245px,39vh,410px);
+  flex:0 1 auto;
+}
+.j-page .j-hero .eyebrow{order:3;margin-top:clamp(4px,1vh,10px)}
+.j-page .j-hero h1{order:4;margin-top:8px;margin-bottom:8px}
+.j-page .j-hero .j-ornament{order:5;margin:0 auto 7px}
+.j-page .j-hero .hero-date{order:6}
+.j-page .j-hero .arabic{order:7}
+.j-page .j-hero .hero-copy{order:8;max-width:610px;margin:10px auto 0}
+.j-page .j-hero .scroll-link{order:9;margin-top:clamp(14px,3vh,28px)}
+
+/* Make the supplied bride/groom artwork feel like a composed editorial pair. */
+.j-page .j-hero .couple-art::before,
+.j-page .j-hero .couple-art::after{
+  width:min(43%,350px);
+  height:clamp(235px,36vh,400px);
+  filter:drop-shadow(0 25px 32px rgba(0,0,0,.28));
+}
+.j-page .j-hero .couple-art::before{transform:translateX(2%)}
+.j-page .j-hero .couple-art::after{transform:translateX(-2%);margin-left:-3%}
+.j-page .j-hero .couple-art:hover::before{transform:translate(2%,-7px) rotate(-1deg)}
+.j-page .j-hero .couple-art:hover::after{transform:translate(-2%,-9px) rotate(1deg)}
+
+/* Gold ornamental side glows. */
+.j-page .j-hero .hero-inner::before,
+.j-page .j-hero .hero-inner::after{
+  content:"✦";
+  position:absolute;
+  top:50%;
+  color:#d8b66c;
+  font-size:12px;
+  opacity:.7;
+  text-shadow:0 0 24px rgba(216,182,108,.7);
+  animation:jHeroTwinkle 3.8s ease-in-out infinite;
+}
+.j-page .j-hero .hero-inner::before{left:3%;transform:translateY(-20px)}
+.j-page .j-hero .hero-inner::after{right:3%;transform:translateY(20px);animation-delay:1.3s}
+@keyframes jHeroTwinkle{0%,100%{opacity:.28;transform:translateY(-20px) scale(.8)}50%{opacity:.85;transform:translateY(-20px) scale(1.18)}}
+
+@media(max-width:700px){
+  .j-page .j-hero::after{inset:11px}
+  .j-page .j-hero .hero-inner{width:92vw;padding:78px 0 28px;justify-content:center}
+  .j-page .j-hero .monogram{width:48px;height:48px;flex-basis:48px;font-size:13px}
+  .j-page .j-hero .couple-art{width:98vw;min-height:235px;margin-top:4px}
+  .j-page .j-hero .couple-art::before,
+  .j-page .j-hero .couple-art::after{width:48%;height:225px}
+  .j-page .j-hero .hero-copy{max-width:330px;font-size:13px;line-height:1.8}
+  .j-page .j-hero .scroll-link{font-size:11px;margin-top:14px}
+  .j-page .j-hero .hero-inner::before{left:0}
+  .j-page .j-hero .hero-inner::after{right:0}
+}
+@media(max-height:700px) and (min-width:701px){
+  .j-page .j-hero .hero-inner{padding-top:74px;padding-bottom:24px}
+  .j-page .j-hero .couple-art{min-height:220px}
+  .j-page .j-hero .couple-art::before,.j-page .j-hero .couple-art::after{height:215px}
+  .j-page .j-hero .scroll-link{margin-top:10px}
+}
+@media(prefers-reduced-motion:reduce){
+  .j-page .j-hero .hero-inner::before,.j-page .j-hero .hero-inner::after{animation:none}
+}
