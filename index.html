@@ -31,6 +31,7 @@
     <link rel="stylesheet" href="/src/jertiq-hero-polish.css" />
     <link rel="stylesheet" href="/src/jertiq-couple-scope.css" />
     <link rel="stylesheet" href="/src/jertiq-premium-pass.css" />
+    <link rel="stylesheet" href="/src/jertiq-luxury-final.css" />
   </head>
   <body>
     <div id="root"></div>
@@ -40,31 +41,23 @@
         const embed='https://w.soundcloud.com/player/?url='+encodeURIComponent(track)+'&color=%238e1832&auto_play=true&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false&visual=false';
         function music(){
           if(document.querySelector('.sc-music-shell'))return;
-          const shell=document.createElement('div');
-          shell.className='sc-music-shell';
+          const shell=document.createElement('div');shell.className='sc-music-shell';
           shell.innerHTML='<iframe class="sc-music-embed" title="Wedding music" allow="autoplay" src="'+embed+'"></iframe>';
           document.body.appendChild(shell);
           const frame=shell.querySelector('iframe');
-          frame.addEventListener('load',function(){
-            try{frame.contentWindow.postMessage(JSON.stringify({method:'play'}),'*')}catch(e){}
-          });
+          frame.addEventListener('load',function(){try{frame.contentWindow.postMessage(JSON.stringify({method:'play'}),'*')}catch(e){}});
         }
         function enter(){
-          const splash=document.querySelector('.j-entry');
-          if(!splash)return;
-          document.body.classList.add('j-opened');
-          splash.classList.add('is-leaving');
+          const splash=document.querySelector('.j-entry');if(!splash)return;
+          document.body.classList.add('j-opened');splash.classList.add('is-leaving');
           setTimeout(function(){splash.remove();},900);
-          const frame=document.querySelector('.sc-music-embed');
-          if(frame){try{frame.contentWindow.postMessage(JSON.stringify({method:'play'}),'*')}catch(e){}}
+          const frame=document.querySelector('.sc-music-embed');if(frame){try{frame.contentWindow.postMessage(JSON.stringify({method:'play'}),'*')}catch(e){}}
         }
         function entrance(){
           if(document.querySelector('.j-entry'))return;
-          const splash=document.createElement('div');
-          splash.className='j-entry';
+          const splash=document.createElement('div');splash.className='j-entry';
           splash.innerHTML='<div class="j-entry-glow"></div><div class="j-entry-ornament">✦</div><div class="j-entry-inner"><div class="j-entry-monogram">M <span>&</span> L</div><div class="j-entry-line"></div><p class="j-entry-kicker">A Sudanese Jertiq Celebration</p><h1>Mohamed <span>&</span> Laila</h1><p class="j-entry-ar">محمد وليلي</p><button class="j-entry-button"><span>Open Invitation</span><small>♫ Tap to enter with music</small></button></div></div>';
-          document.body.appendChild(splash);
-          splash.addEventListener('click',enter,{once:true});
+          document.body.appendChild(splash);splash.addEventListener('click',enter,{once:true});
           splash.querySelector('button').addEventListener('click',function(e){e.stopPropagation();enter();});
         }
         function reveal(){
