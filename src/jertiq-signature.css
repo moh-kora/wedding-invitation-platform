@@ -1,0 +1,29 @@
+/* Mohamed & Laila — final Jertiq signature layer */
+:root{--ml-burgundy:#4a0d1d;--ml-wine:#68152b;--ml-gold:#d8b66c;--ml-champagne:#f0d9a1;--ml-ivory:#fbf7ef;--ml-ink:#18070d}
+html{scroll-behavior:smooth}
+.j-page{background:radial-gradient(circle at 50% -10%,rgba(216,182,108,.08),transparent 34%),var(--ml-ivory)}
+.j-nav{backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);background:rgba(251,247,239,.86)!important;border-bottom:1px solid rgba(74,13,29,.1)!important}
+.j-nav button{transition:color .25s ease,transform .25s ease}.j-nav button:hover{color:var(--ml-burgundy);transform:translateY(-1px)}
+.j-hero{isolation:isolate;background:radial-gradient(circle at 50% 40%,rgba(216,182,108,.14),transparent 28%),linear-gradient(135deg,#240711,#4a0d1d 52%,#210710)!important}
+.j-hero .hero-inner{position:relative;z-index:2}
+.j-hero .monogram{box-shadow:0 0 0 1px rgba(216,182,108,.45),0 0 45px rgba(216,182,108,.13);background:rgba(24,7,13,.28)}
+.j-hero h1{filter:drop-shadow(0 10px 30px rgba(0,0,0,.18))}
+.j-hero h1 em{color:var(--ml-gold)!important;text-shadow:0 0 22px rgba(216,182,108,.22)}
+.j-ornament{opacity:.8;text-shadow:0 0 18px rgba(216,182,108,.22)}
+.intro,.events,.gallery,.travel,.faq,.guestbook,.hashtag{position:relative}
+.intro:before,.events:before,.gallery:before,.family:before,.travel:before,.faq:before,.guestbook:before,.hashtag:before{content:'✦';position:absolute;top:28px;left:50%;transform:translateX(-50%);font-size:10px;color:var(--ml-gold);opacity:.7}
+.event-card{border:1px solid rgba(74,13,29,.12)!important;box-shadow:0 18px 55px rgba(38,8,18,.08)!important;background:rgba(255,255,255,.58)!important;transition:transform .35s ease,box-shadow .35s ease,border-color .35s ease}
+.event-card:hover{transform:translateY(-5px);box-shadow:0 24px 65px rgba(38,8,18,.13)!important;border-color:rgba(216,182,108,.5)!important}
+.event-no{color:var(--ml-gold)!important}
+.count-grid div{background:rgba(255,255,255,.52)!important;border:1px solid rgba(74,13,29,.1)!important;box-shadow:0 12px 35px rgba(38,8,18,.05);transition:transform .3s ease}.count-grid div:hover{transform:translateY(-3px)}
+.gallery-grid button{border:1px solid rgba(216,182,108,.18)!important;box-shadow:0 16px 45px rgba(38,8,18,.08);transition:transform .4s ease,box-shadow .4s ease}.gallery-grid button:hover{transform:translateY(-4px) scale(1.01);box-shadow:0 24px 60px rgba(38,8,18,.14)}
+.scratch-message,.scratch-cover{border:1px solid rgba(216,182,108,.28)!important;box-shadow:0 20px 70px rgba(38,8,18,.1)}
+.rsvp-modal{border:1px solid rgba(216,182,108,.32)!important;box-shadow:0 35px 110px rgba(0,0,0,.28)!important}
+.rsvp-modal input:focus,.rsvp-modal select:focus,.rsvp-modal textarea:focus{outline:2px solid rgba(216,182,108,.65);outline-offset:2px}
+.guest-messages article{border-left:2px solid var(--ml-gold)!important}
+.j-entry{background:radial-gradient(circle at 50% 25%,#741a34 0,#350914 48%,#100308 100%)}
+.j-entry-inner{border-color:rgba(240,217,161,.45);box-shadow:0 30px 120px rgba(0,0,0,.45),inset 0 0 80px rgba(216,182,108,.025)}
+.j-entry-monogram{letter-spacing:.08em;text-shadow:0 0 30px rgba(216,182,108,.2)}
+.j-entry-button{border-radius:999px;box-shadow:0 14px 45px rgba(0,0,0,.28),inset 0 1px rgba(255,255,255,.25)}
+@media(max-width:700px){.intro:before,.events:before,.gallery:before,.family:before,.travel:before,.faq:before,.guestbook:before,.hashtag:before{top:18px}.j-hero .monogram{transform:scale(.92)}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.event-card:hover,.gallery-grid button:hover,.count-grid div:hover{transform:none}}
