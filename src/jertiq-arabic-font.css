@@ -1,56 +1,48 @@
-/* Arabic typography — elegant, restrained, Jertiq-inspired */
+/* Mohamed & Laila — Sudanese Jertiq Arabic typography */
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;500;600&display=swap');
 
-.j-page .j-bilingual-ar,
-.j-entry .j-bilingual-ar{
-  display:block;
-  width:100%;
-  margin:.42rem auto 0;
-  font-family:'VIP Hakm Regular','VIP Hakm','Noto Sans Arabic',Tahoma,Arial,sans-serif;
-  font-size:.88em;
-  font-weight:400;
-  line-height:1.9;
-  letter-spacing:0;
-  direction:rtl;
-  unicode-bidi:plaintext;
-  text-align:center;
-  opacity:.78;
-}
+:root{--j-ar-font:'VIP Hakm Regular','VIP Hakm','Noto Sans Arabic',Tahoma,Arial,sans-serif}
 
-/* Make Arabic visually subordinate but intentionally designed */
-.j-page h1 .j-bilingual-ar,
-.j-page h2 .j-bilingual-ar,
-.j-page .eyebrow .j-bilingual-ar{
-  font-size:.62em;
-  margin-top:.5rem;
-  opacity:.82;
-}
+/* English + Arabic are treated as one editorial composition. */
+.j-page .j-bilingual-ar,.j-entry .j-bilingual-ar{display:block;width:100%;margin:.48rem auto 0;font-family:var(--j-ar-font);direction:rtl;unicode-bidi:plaintext;text-align:center;letter-spacing:0;font-weight:400;line-height:1.9;opacity:.78}
 
-.j-page p .j-bilingual-ar{font-size:.9em;opacity:.76}
-.j-page button .j-bilingual-ar,
-.j-page a .j-bilingual-ar{
-  font-size:.82em;
-  margin-top:.12rem;
-  line-height:1.55;
-}
+.j-page h2 .j-bilingual-ar{font-size:.40em;line-height:1.8;margin:.48rem auto 0;font-weight:400;opacity:.82}
+.j-page h3 .j-bilingual-ar{font-size:.56em;line-height:1.8;margin:.32rem auto 0;font-weight:500;opacity:.80}
+.j-page p .j-bilingual-ar{font-size:.90em;line-height:1.95;margin:.36rem auto 0;max-width:720px;opacity:.74}
+.j-page .eyebrow .j-bilingual-ar{font-size:.72em;line-height:1.7;margin:.22rem auto 0;font-weight:500;opacity:.76}
+.j-page button .j-bilingual-ar,.j-page a .j-bilingual-ar{font-size:.78em;line-height:1.6;margin:.16rem auto 0;font-weight:500;opacity:.88}
 
-.j-page .j-bilingual-ar + .j-bilingual-ar{margin-top:.18rem}
+/* Hero: elegant Arabic caption, never competing with the name artwork. */
+.j-page .j-hero .hero-copy .j-bilingual-ar{font-size:14px;line-height:2;margin-top:.48rem;color:#f5e8dc;opacity:.88;max-width:600px}
+.j-page .j-hero .arabic{font-family:var(--j-ar-font);font-weight:500;font-size:clamp(18px,2vw,23px);line-height:1.8;letter-spacing:0;direction:rtl;unicode-bidi:plaintext;margin:18px auto 6px;color:#f2dcc0}
 
-.j-page .j-hero .j-bilingual-ar{color:#f8eee2}
-.j-page .section-dark .j-bilingual-ar{color:#f4e6d8}
-.j-page .jertiq-heritage .j-bilingual-ar{color:#4a1723}
+/* Entrance screen */
+.j-entry .j-bilingual-ar{font-size:14px;line-height:1.8;margin:.35rem auto 0;color:#f3dfc5;opacity:.9}
 
-.j-entry .j-bilingual-ar{
-  font-size:14px;
-  margin-top:.3rem;
-  color:#f4dfc3;
-  opacity:.9;
-}
+/* Jertiq heritage: Arabic names are a visual anchor; translations are softer beneath English. */
+.j-page .jertiq-heritage .jh-ar{font-family:var(--j-ar-font);font-size:clamp(19px,2vw,25px);font-weight:500;line-height:1.7;letter-spacing:0;direction:rtl;margin:0 0 .35rem;color:#6f1028}
+.j-page .jertiq-heritage .j-bilingual-ar{color:#4a1723;opacity:.72}
+.j-page .jertiq-heritage .jh-card h3{margin-bottom:.35rem}
+
+/* Dark sections */
+.j-page .section-dark .j-bilingual-ar{color:#f6e9df;opacity:.76}
+
+/* Forms / Arabic controls */
+.j-page input[dir="rtl"],.j-page textarea[dir="rtl"],.j-page select[dir="rtl"]{font-family:var(--j-ar-font);direction:rtl;text-align:right;letter-spacing:0}
+
+/* Prevent Arabic lines from becoming cramped or colliding with icons. */
+.j-page .j-bilingual-ar{overflow-wrap:anywhere;word-break:normal;min-width:0}
+.j-page .j-bilingual-ar::selection{background:#d8b66c;color:#240711}
 
 @media(max-width:700px){
-  .j-page .j-bilingual-ar{font-size:.82em;line-height:1.8;margin-top:.28rem}
-  .j-page h1 .j-bilingual-ar,.j-page h2 .j-bilingual-ar{font-size:.58em}
+  .j-page .j-bilingual-ar{font-size:.82em;line-height:1.85;margin-top:.30rem}
+  .j-page h2 .j-bilingual-ar{font-size:.42em;line-height:1.75;margin-top:.38rem}
+  .j-page h3 .j-bilingual-ar{font-size:.56em}
+  .j-page p .j-bilingual-ar{font-size:.86em;line-height:1.9}
+  .j-page .eyebrow .j-bilingual-ar{font-size:.70em}
+  .j-page .j-hero .hero-copy .j-bilingual-ar{font-size:13px;line-height:1.9}
+  .j-page .j-hero .arabic{font-size:18px;margin-top:14px}
+  .j-page .jertiq-heritage .jh-ar{font-size:20px}
   .j-entry .j-bilingual-ar{font-size:13px}
 }
-
 @media(prefers-reduced-motion:reduce){.j-bilingual-ar{transition:none!important}}
