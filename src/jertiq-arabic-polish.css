@@ -1,0 +1,71 @@
+/* Arabic companion typography — Sudanese Jertiq luxury identity */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;500;600&display=swap');
+
+.j-page{
+  --ar-font:'VIP Hakm Regular','VIP Hakm','Noto Sans Arabic',Tahoma,Arial,sans-serif;
+}
+
+/* English first / Sudanese Arabic second: one visual unit */
+.j-page .ar-text,
+.j-page [dir="rtl"]{
+  font-family:var(--ar-font);
+  direction:rtl;
+  unicode-bidi:plaintext;
+  text-align:center;
+  font-weight:400;
+  letter-spacing:0;
+  line-height:1.95;
+  margin-top:.45rem;
+  color:rgba(255,248,238,.82);
+}
+
+.j-page .en-ar-pair{display:flex;flex-direction:column;align-items:center;gap:0}
+.j-page .en-ar-pair>.en{margin:0}
+.j-page .en-ar-pair>.ar-text{margin:.3rem 0 0}
+
+/* Hero */
+.j-page .j-hero .hero-copy + .ar-text,
+.j-page .j-hero .hero-copy + [dir="rtl"]{font-size:clamp(14px,1.35vw,17px)}
+.j-page .j-hero .hero-copy{margin-bottom:.15rem}
+
+/* Section paragraphs */
+.j-page .intro>p,
+.j-page .story-copy>p,
+.j-page .reveal-section>p,
+.j-page .gallery>p,
+.j-page .guestbook>p,
+.j-page .faq>p{
+  max-width:760px;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+.j-page .ar-text.section-ar{font-size:clamp(14px,1.25vw,16px);max-width:720px}
+
+/* Heritage cards */
+.j-page .jh-card .jh-ar{font-family:var(--ar-font);font-size:clamp(15px,1.25vw,18px);font-weight:500;line-height:1.8;letter-spacing:0;direction:rtl}
+.j-page .jh-card p + .ar-text{margin-top:.15rem}
+
+/* Events: Arabic sits directly under the English description/title */
+.j-page .event-card .ar-text{font-size:14px;line-height:1.85;color:rgba(255,248,238,.7);margin-top:.35rem}
+
+/* Small labels/buttons remain crisp */
+.j-page .ar-label{font-family:var(--ar-font);font-size:12px;line-height:1.7;direction:rtl;letter-spacing:0}
+
+/* Forms */
+.j-page input[dir="rtl"],
+.j-page textarea[dir="rtl"],
+.j-page select[dir="rtl"]{font-family:var(--ar-font);text-align:right;direction:rtl}
+
+/* Navigation and action Arabic */
+.j-page .nav-ar{font-family:var(--ar-font);direction:rtl;letter-spacing:0;font-size:12px}
+
+@media(max-width:700px){
+  .j-page .ar-text,[dir="rtl"]{line-height:1.85;margin-top:.25rem}
+  .j-page .j-hero .hero-copy + .ar-text{font-size:13px}
+  .j-page .ar-text.section-ar{font-size:13px}
+  .j-page .jh-card .jh-ar{font-size:15px}
+  .j-page .event-card .ar-text{font-size:13px}
+}
+
+@media(prefers-reduced-motion:reduce){.j-page .ar-text{transition:none!important}}
