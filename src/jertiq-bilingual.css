@@ -1,0 +1,57 @@
+/* Sudanese Arabic bilingual layer — English stays first, Arabic follows beneath. */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;500;600&display=swap');
+
+.j-page .j-arabic-copy,
+.j-entry .j-arabic-copy,
+.j-bilingual-ar{
+  display:block;
+  margin-top:.48rem;
+  direction:rtl;
+  unicode-bidi:plaintext;
+  font-family:'VIP Hakm Regular','Noto Sans Arabic','Tahoma',sans-serif;
+  font-size:.82em;
+  line-height:1.75;
+  font-weight:400;
+  letter-spacing:0;
+  opacity:.86;
+}
+
+.j-page .eyebrow .j-arabic-copy,
+.j-page .eyebrow .j-bilingual-ar{
+  margin-top:.22rem;
+  font-size:.76em;
+  line-height:1.65;
+  font-weight:500;
+  opacity:.78;
+}
+
+.j-page h1 .j-arabic-copy,
+.j-page h2 .j-arabic-copy,
+.j-page h3 .j-arabic-copy{
+  font-size:.43em;
+  line-height:1.7;
+  font-weight:400;
+  margin-top:.7rem;
+  letter-spacing:0;
+}
+
+.j-hero .j-bilingual-ar{
+  color:rgba(255,247,239,.9);
+  font-size:1rem;
+  margin-top:.62rem;
+}
+
+.j-entry .j-bilingual-ar{
+  color:rgba(255,247,239,.9);
+  font-size:1rem;
+  margin-top:.55rem;
+}
+
+.j-page section .j-bilingual-ar + .j-bilingual-ar{margin-top:.25rem}
+
+@media(max-width:700px){
+  .j-page .j-arabic-copy,.j-page .j-bilingual-ar,.j-entry .j-bilingual-ar{font-size:.78em;line-height:1.7}
+  .j-page h1 .j-arabic-copy,.j-page h2 .j-arabic-copy,.j-page h3 .j-arabic-copy{font-size:.42em;line-height:1.65}
+}
+
+@media(prefers-reduced-motion:reduce){.j-bilingual-ar{animation:none!important}}
