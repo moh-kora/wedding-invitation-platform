@@ -1,0 +1,56 @@
+/* Arabic typography — elegant, restrained, Jertiq-inspired */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;500;600&display=swap');
+
+.j-page .j-bilingual-ar,
+.j-entry .j-bilingual-ar{
+  display:block;
+  width:100%;
+  margin:.42rem auto 0;
+  font-family:'VIP Hakm Regular','VIP Hakm','Noto Sans Arabic',Tahoma,Arial,sans-serif;
+  font-size:.88em;
+  font-weight:400;
+  line-height:1.9;
+  letter-spacing:0;
+  direction:rtl;
+  unicode-bidi:plaintext;
+  text-align:center;
+  opacity:.78;
+}
+
+/* Make Arabic visually subordinate but intentionally designed */
+.j-page h1 .j-bilingual-ar,
+.j-page h2 .j-bilingual-ar,
+.j-page .eyebrow .j-bilingual-ar{
+  font-size:.62em;
+  margin-top:.5rem;
+  opacity:.82;
+}
+
+.j-page p .j-bilingual-ar{font-size:.9em;opacity:.76}
+.j-page button .j-bilingual-ar,
+.j-page a .j-bilingual-ar{
+  font-size:.82em;
+  margin-top:.12rem;
+  line-height:1.55;
+}
+
+.j-page .j-bilingual-ar + .j-bilingual-ar{margin-top:.18rem}
+
+.j-page .j-hero .j-bilingual-ar{color:#f8eee2}
+.j-page .section-dark .j-bilingual-ar{color:#f4e6d8}
+.j-page .jertiq-heritage .j-bilingual-ar{color:#4a1723}
+
+.j-entry .j-bilingual-ar{
+  font-size:14px;
+  margin-top:.3rem;
+  color:#f4dfc3;
+  opacity:.9;
+}
+
+@media(max-width:700px){
+  .j-page .j-bilingual-ar{font-size:.82em;line-height:1.8;margin-top:.28rem}
+  .j-page h1 .j-bilingual-ar,.j-page h2 .j-bilingual-ar{font-size:.58em}
+  .j-entry .j-bilingual-ar{font-size:13px}
+}
+
+@media(prefers-reduced-motion:reduce){.j-bilingual-ar{transition:none!important}}
