@@ -4,7 +4,8 @@ html{scroll-behavior:smooth}
 .j-page{background:radial-gradient(circle at 50% -10%,rgba(216,182,108,.08),transparent 34%),var(--ml-ivory)}
 .j-nav{backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);background:rgba(251,247,239,.86)!important;border-bottom:1px solid rgba(74,13,29,.1)!important}
 .j-nav button{transition:color .25s ease,transform .25s ease}.j-nav button:hover{color:var(--ml-burgundy);transform:translateY(-1px)}
-.j-hero{isolation:isolate;background:radial-gradient(circle at 50% 40%,rgba(216,182,108,.14),transparent 28%),linear-gradient(135deg,#240711,#4a0d1d 52%,#210710)!important}
+/* Keep the invitation cover image when one is supplied inline; use luxury gradients only as the fallback. */
+.j-hero{isolation:isolate;background-color:#240711;background-image:radial-gradient(circle at 50% 40%,rgba(216,182,108,.14),transparent 28%),linear-gradient(135deg,#240711,#4a0d1d 52%,#210710)}
 .j-hero .hero-inner{position:relative;z-index:2}
 .j-hero .monogram{box-shadow:0 0 0 1px rgba(216,182,108,.45),0 0 45px rgba(216,182,108,.13);background:rgba(24,7,13,.28)}
 .j-hero h1{filter:drop-shadow(0 10px 30px rgba(0,0,0,.18))}
