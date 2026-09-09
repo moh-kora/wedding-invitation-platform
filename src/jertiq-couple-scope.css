@@ -1,0 +1,16 @@
+/* Mohamed & Laila — keep supplied couple artwork exclusive to the opening Hero. */
+
+/* The bride/groom illustrations are intentionally shown only in the first Hero. */
+.j-page main section:not(.j-hero) .couple-art,
+.j-page .j-page section:not(.j-hero) .couple-art{
+  display:none!important;
+}
+
+/* Preserve the original Hero artwork composition. */
+.j-page .j-hero .couple-art{
+  display:flex!important;
+}
+
+@media(max-width:700px){
+  .j-page main section:not(.j-hero) .couple-art{display:none!important}
+}
