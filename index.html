@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="/src/jertiq-final.css" />
     <link rel="stylesheet" href="/src/jertiq-heritage.css" />
     <link rel="stylesheet" href="/src/soundcloud.css" />
+    <link rel="stylesheet" href="/src/jertiq-typography-fix.css" />
   </head>
   <body>
     <div id="root"></div>
@@ -44,7 +45,7 @@
         }
         function entrance(){
           if(document.querySelector('.j-entry')) return;
-          const splash=document.createElement('div'); splash.className='j-entry'; splash.innerHTML='<div class="j-entry-glow"></div><div class="j-entry-ornament">✦</div><div class="j-entry-monogram">M <span>&</span> L</div><div class="j-entry-line"></div><p class="j-entry-kicker">A Sudanese Jertiq Celebration</p><h1>Mohamed <span>&</span> Laila</h1><p class="j-entry-ar">محمد وليلي</p><button class="j-entry-button"><span>Open Invitation</span><small>♫ Tap to enter with music</small></button></div>';
+          const splash=document.createElement('div'); splash.className='j-entry'; splash.innerHTML='<div class="j-entry-glow"></div><div class="j-entry-ornament">✦</div><div class="j-entry-inner"><div class="j-entry-monogram">M <span>&</span> L</div><div class="j-entry-line"></div><p class="j-entry-kicker">A Sudanese Jertiq Celebration</p><h1>Mohamed <span>&</span> Laila</h1><p class="j-entry-ar">محمد وليلي</p><button class="j-entry-button"><span>Open Invitation</span><small>♫ Tap to enter with music</small></button></div></div>';
           document.body.appendChild(splash);
           splash.addEventListener('click',enter,{once:true});
           splash.querySelector('button').addEventListener('click',function(e){e.stopPropagation();enter();});
