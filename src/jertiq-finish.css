@@ -1,0 +1,43 @@
+/* Final luxury polish — Mohamed & Laila */
+:root{--j-burgundy:#4a0d1d;--j-crimson:#8e1832;--j-ivory:#fbf7ef;--j-gold:#d3ae68;--j-champagne:#ead8ae;--j-ink:#171014}
+.j-page{background:var(--j-ivory);color:var(--j-ink)}
+.j-page main{overflow:hidden}.j-page section{position:relative}
+.j-page .j-hero{min-height:100svh;isolation:isolate;background-position:center;background-size:cover}
+.j-page .j-hero:after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle at 50% 38%,transparent 0,rgba(8,2,5,.04) 38%,rgba(8,2,5,.62) 100%);z-index:-1}
+.j-page .hero-inner{position:relative;z-index:2;padding:clamp(6rem,11vh,9rem) 1.25rem 4rem}
+.j-page .monogram{filter:drop-shadow(0 8px 25px rgba(0,0,0,.22));transition:transform .6s ease,filter .6s ease}
+.j-page .monogram:hover{transform:translateY(-4px) scale(1.025);filter:drop-shadow(0 12px 30px rgba(0,0,0,.3))}
+.j-page .j-hero h1{letter-spacing:-.055em;text-shadow:0 4px 28px rgba(0,0,0,.24)}
+.j-page .j-hero h1 em{display:inline-block;margin:.12em .18em;font-family:Georgia,serif;font-weight:400;color:var(--j-gold);font-size:.62em;vertical-align:middle}
+.j-page .hero-copy{max-width:620px;margin-inline:auto}
+.j-page .scroll-link{display:inline-flex;align-items:center;gap:.5rem;margin-top:1.25rem;padding:.72rem 1rem;border:1px solid rgba(234,216,174,.48);border-radius:999px;background:rgba(20,5,10,.16);backdrop-filter:blur(10px);color:inherit;text-decoration:none;transition:transform .3s ease,background .3s ease,border-color .3s ease}
+.j-page .scroll-link:hover{transform:translateY(-2px);background:rgba(20,5,10,.3);border-color:var(--j-gold)}
+.j-page .jertiq-heritage{overflow:hidden}
+.j-page .jertiq-heritage:before{content:"";position:absolute;inset:0;opacity:.06;background-image:radial-gradient(circle at 20% 30%,var(--j-gold) 0 1px,transparent 1.5px),radial-gradient(circle at 75% 70%,var(--j-crimson) 0 1px,transparent 1.5px);background-size:34px 34px,46px 46px;pointer-events:none}
+.j-page .scratch-card{cursor:crosshair;touch-action:none;box-shadow:0 24px 70px rgba(45,8,20,.13)}
+.j-page .scratch-card:active{transform:scale(.992)}
+.j-page .scratch-cover{transition:opacity .45s ease,transform .45s ease}
+.j-page .scratch-card.revealed .scratch-cover{opacity:0;transform:scale(1.04);pointer-events:none}
+.j-page .scratch-message{animation:j-date-glow 2.8s ease-in-out infinite}
+@keyframes j-date-glow{0%,100%{filter:drop-shadow(0 0 0 rgba(211,174,104,0))}50%{filter:drop-shadow(0 0 15px rgba(211,174,104,.22))}}
+.j-page .count-grid>div{transition:transform .35s ease,box-shadow .35s ease}
+.j-page .count-grid>div:hover{transform:translateY(-5px);box-shadow:0 18px 42px rgba(60,10,25,.12)}
+.j-page .gallery-grid button{position:relative;overflow:hidden;border-radius:2px;isolation:isolate}
+.j-page .gallery-grid button:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(17,4,10,.48));opacity:0;transition:opacity .4s ease;pointer-events:none}
+.j-page .gallery-grid button:hover:after{opacity:1}
+.j-page .gallery-grid img{transition:transform .8s cubic-bezier(.2,.7,.2,1),filter .5s ease}
+.j-page .gallery-grid button:hover img{transform:scale(1.055);filter:saturate(1.04)}
+.j-page .gallery-grid button span{z-index:2}
+.j-page .rsvp-modal{box-shadow:0 35px 100px rgba(20,3,10,.35);border:1px solid rgba(211,174,104,.32)}
+.j-page .rsvp-modal input:focus,.j-page .rsvp-modal select:focus,.j-page .rsvp-modal textarea:focus{outline:0;border-color:var(--j-gold);box-shadow:0 0 0 3px rgba(211,174,104,.14)}
+.j-page .rsvp-modal button[type=submit]{min-height:48px}
+.j-page .j-nav{backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+.j-page .j-nav button{transition:transform .25s ease,color .25s ease,background .25s ease}
+.j-page .j-nav button:hover{transform:translateY(-1px)}
+.j-entry .j-entry-inner h1{letter-spacing:-.05em}.j-entry .j-entry-button{box-shadow:0 12px 35px rgba(0,0,0,.22)}
+.j-entry .j-entry-button:hover{transform:translateY(-3px);box-shadow:0 18px 45px rgba(0,0,0,.3)}
+.j-entry-monogram{background-size:contain!important;background-repeat:no-repeat!important;background-position:center!important}
+.j-page button:focus-visible,.j-entry button:focus-visible,.j-page a:focus-visible{outline:2px solid var(--j-gold);outline-offset:4px}
+@media(max-width:700px){.j-page .hero-inner{padding-top:5.5rem;padding-bottom:3rem}.j-page .j-hero h1{font-size:clamp(3rem,15vw,5rem);letter-spacing:-.06em}.j-page .hero-copy{font-size:.94rem;line-height:1.7}.j-page .scroll-link{margin-top:1rem}.j-page .gallery-grid button{border-radius:1px}}
+@media(max-width:390px){.j-page .j-hero h1{font-size:2.75rem}.j-page .hero-inner{padding-inline:1rem}}
+@media(prefers-reduced-motion:reduce){.j-page .monogram,.j-page .gallery-grid img,.j-page .count-grid>div,.j-page .scroll-link,.j-entry .j-entry-button{transition:none}.j-page .scratch-message{animation:none}}
