@@ -1,0 +1,15 @@
+/* Uploaded couple-name typography artwork */
+.j-page .j-hero h1{font-size:0;min-height:clamp(110px,12vw,180px);width:min(92vw,760px);margin-inline:auto;background:url('/wedding-invitation-platform/Mohamed%20%26%20Layla.png') center/contain no-repeat;filter:drop-shadow(0 14px 34px rgba(0,0,0,.24))}
+.j-page .j-hero h1 em{display:none!important}
+.j-entry-inner h1{font-size:0!important;min-height:clamp(72px,9vw,120px);width:min(82vw,520px);margin-inline:auto;background:url('/wedding-invitation-platform/Mohamed%20%26%20Layla.png') center/contain no-repeat;filter:drop-shadow(0 10px 28px rgba(0,0,0,.3))}
+.j-entry-inner h1 span{display:none!important}
+.j-page .thanks .names{font-size:0!important;min-height:clamp(72px,8vw,120px);width:min(82vw,500px);margin:1.2rem auto;background:url('/wedding-invitation-platform/Mohamed%20%26%20Layla.png') center/contain no-repeat;filter:drop-shadow(0 10px 28px rgba(0,0,0,.18))}
+.j-page .thanks .names span{display:none!important}
+.j-page .scratch-message>span{font-size:0;width:min(48vw,230px);height:48px;display:block;margin:.25rem auto 0;background:url('/wedding-invitation-platform/Mohamed%20%26%20Layla.png') center/contain no-repeat}
+@media(max-width:700px){
+ .j-page .j-hero h1{min-height:92px;width:min(94vw,560px)}
+ .j-entry-inner h1{min-height:68px;width:min(88vw,420px)}
+ .j-page .thanks .names{min-height:62px;width:min(88vw,390px)}
+ .j-page .scratch-message>span{width:min(58vw,210px);height:40px}
+}
+@media(max-width:390px){.j-page .j-hero h1{min-height:78px}.j-entry-inner h1{min-height:58px}.j-page .thanks .names{min-height:54px}}
