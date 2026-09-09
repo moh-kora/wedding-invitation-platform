@@ -1,62 +1,71 @@
-/* Mobile-safe SoundCloud background music.
- * Browsers may block autoplay, so the invitation's first real touch/click
- * is used to call the SoundCloud Widget API directly on the embedded player.
+/* Mobile-safe SoundCloud playback.
+ * The invitation's Open Invitation button is the explicit user gesture used
+ * to start the background track on iPhone/Safari and Android browsers.
  */
 (function(){
   const SDK='https://w.soundcloud.com/player/api.js';
   let widget=null;
-  let sdkReady=false;
-  let userInteracted=false;
+  let sdkLoaded=false;
+  let pendingPlay=false;
 
-  function getFrame(){return document.querySelector('.sc-music-embed');}
+  function frame(){return document.querySelector('.sc-music-embed');}
 
   function init(){
-    const frame=getFrame();
-    if(!frame || !window.SC || !SC.Widget)return;
+    const f=frame();
+    if(!f || !window.SC || !SC.Widget || widget)return;
     try{
-      widget=SC.Widget(frame);
+      widget=SC.Widget(f);
       widget.bind(SC.Widget.Events.READY,function(){
-        if(userInteracted) play();
+        if(pendingPlay) play();
       });
-    }catch(e){}
+    }catch(e){widget=null;}
   }
 
   function play(){
-    if(!widget)return;
-    try{widget.play();}catch(e){}
+    pendingPlay=true;
+    if(!widget)init();
+    if(widget){try{widget.play();}catch(e){}}
   }
 
-  function loadSDK(){
-    if(window.SC && SC.Widget){sdkReady=true;init();return;}
+  function load(){
+    if(window.SC && SC.Widget){sdkLoaded=true;init();return;}
     if(document.querySelector('script[data-sc-widget-api]'))return;
     const s=document.createElement('script');
     s.src=SDK;
     s.async=true;
     s.dataset.scWidgetApi='true';
-    s.onload=function(){sdkReady=true;init();};
+    s.onload=function(){sdkLoaded=true;init();if(pendingPlay)play();};
     document.head.appendChild(s);
   }
 
-  function activate(){
-    userInteracted=true;
-    loadSDK();
-    if(widget)play();
-    setTimeout(function(){if(widget)play();},100);
-    setTimeout(function(){if(widget)play();},500);
-    setTimeout(function(){if(widget)play();},1200);
+  function activateFromOpenButton(){
+    pendingPlay=true;
+    load();
+    play();
+    setTimeout(play,80);
+    setTimeout(play,400);
+    setTimeout(play,1000);
+  }
+
+  function bindButton(){
+    const btn=document.querySelector('.j-entry-button');
+    if(!btn || btn.dataset.musicBound==='true')return;
+    btn.dataset.musicBound='true';
+    /* This handler runs directly from the user's tap — the gesture Safari needs. */
+    btn.addEventListener('pointerup',activateFromOpenButton,{passive:true});
+    btn.addEventListener('touchend',activateFromOpenButton,{passive:true});
+    btn.addEventListener('click',activateFromOpenButton,{passive:true});
   }
 
   function boot(){
-    loadSDK();
-    document.addEventListener('pointerdown',activate,{passive:true,once:true});
-    document.addEventListener('touchstart',activate,{passive:true,once:true});
-    document.addEventListener('click',activate,{passive:true,once:true});
+    load();
+    bindButton();
+    new MutationObserver(function(){
+      bindButton();
+      if(!widget && frame() && sdkLoaded)init();
+    }).observe(document.documentElement,{childList:true,subtree:true});
   }
 
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});
   else boot();
-
-  new MutationObserver(function(){
-    if(!widget && getFrame() && sdkReady)init();
-  }).observe(document.documentElement,{childList:true,subtree:true});
 })();
