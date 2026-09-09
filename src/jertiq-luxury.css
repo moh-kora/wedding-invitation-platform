@@ -1,0 +1,37 @@
+/* Mohamed & Laila — Jertiq Luxury finishing layer */
+:root{--j-burgundy:#4a0d1d;--j-crimson:#7d1730;--j-ivory:#fbf7f0;--j-gold:#c9a45c;--j-champagne:#ead6a2;--j-ink:#241217}
+.j-page{background:var(--j-ivory)!important;color:var(--j-ink)!important}
+.j-hero{background:radial-gradient(circle at 50% 18%,#8c203d 0,#4a0d1d 42%,#17050b 100%)!important}
+.j-hero:before{border-color:rgba(234,214,162,.45)!important;box-shadow:inset 0 0 80px rgba(201,164,92,.05),0 0 120px rgba(201,164,92,.08)!important}
+.j-hero:after{border-color:rgba(234,214,162,.14)!important}
+.j-hero .hero-inner{max-width:1120px!important}
+.j-hero .monogram{background:rgba(18,4,9,.12)!important}
+.j-hero .couple-art{margin-left:auto!important;margin-right:12%!important;opacity:.98!important}
+.j-hero .couple-art:after{content:'JERTIQ • SUDANESE WEDDING';position:absolute;left:50%;bottom:-12px;transform:translateX(-50%);white-space:nowrap;font:700 7px/1 'DM Sans',sans-serif;letter-spacing:.32em;color:rgba(234,214,162,.68)}
+.intro,.events,.gallery,.family,.guestbook,.faq{background:var(--j-ivory)!important}
+.intro{background:linear-gradient(180deg,#fbf7f0,#f5e9df)!important}
+.intro:after,.gallery:after{content:'✦';position:absolute;right:7%;top:18%;font-size:180px;color:rgba(201,164,92,.045);pointer-events:none}
+.story{background:linear-gradient(115deg,#eee0d5,#dfc9bd)!important;position:relative!important}
+.story:after{content:'J';position:absolute;right:7%;bottom:-8%;font:italic 280px/1 'Playfair Display',serif;color:rgba(74,13,29,.035);pointer-events:none}
+.story .couple-art{filter:drop-shadow(0 30px 35px rgba(74,13,29,.14))!important}
+.event-card{background:linear-gradient(160deg,rgba(255,255,255,.92),rgba(250,241,233,.8))!important}
+.event-card:after{content:'✦';position:absolute;right:25px;bottom:20px;color:rgba(201,164,92,.45);font-size:16px}
+.event-copy small{letter-spacing:.24em!important;color:#9a6d78!important}
+.event-copy h3{color:#3a1721!important}
+.countdown{background:radial-gradient(circle at 50% 0,#64132b 0,#260812 58%,#120408 100%)!important}
+.countdown:before{border-color:rgba(234,214,162,.16)!important}
+.reveal-section{background:linear-gradient(180deg,#f4e8dd,#ead8cc)!important}
+.scratch-card{border:1px solid rgba(234,214,162,.4)!important}
+.venue{background:#fffdf9!important;border:1px solid rgba(74,13,29,.09)!important}
+.dress{background:linear-gradient(135deg,#eee0d5,#f7eee6)!important}
+.gallery-grid button{border:1px solid rgba(74,13,29,.08)!important;box-shadow:0 15px 45px rgba(63,25,35,.07)!important}
+.family{background:#f2e4da!important}
+.travel{background:#fffaf5!important}
+.hashtag{background:linear-gradient(135deg,#f4e8dd,#ead8cc)!important}
+.guestbook{background:#f2e4da!important}
+.faq{background:#fbf7f0!important}
+.rsvp-banner{border:1px solid rgba(234,214,162,.3)!important}
+.thanks{background:radial-gradient(circle at 50% 15%,#7d1730 0,#3b0a18 46%,#16050a 100%)!important}
+.footer{border-top:1px solid rgba(201,164,92,.14)!important}
+@media(max-width:900px){.j-hero .couple-art{margin-right:auto!important}.j-hero .couple-art:after{font-size:6px;letter-spacing:.2em}.intro:after,.gallery:after{font-size:100px;right:2%;top:10%}}
+@media(max-width:700px){.j-hero .couple-art{opacity:.94!important}.j-hero .couple-art:after{bottom:-4px}.story:after{font-size:180px}.event-card:after{right:18px;bottom:16px}}
