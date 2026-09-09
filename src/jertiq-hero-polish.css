@@ -1,0 +1,135 @@
+/* Mohamed & Laila — final hero polish */
+.j-page .j-hero{
+  min-height:100svh;
+  min-height:100dvh;
+  background-color:#21060f;
+}
+.j-page .j-hero::before{
+  background:
+    radial-gradient(ellipse at 50% 16%,rgba(246,220,174,.22),transparent 21%),
+    radial-gradient(ellipse at 50% 52%,rgba(142,24,50,.24),transparent 40%),
+    radial-gradient(ellipse at 8% 55%,rgba(216,182,108,.11),transparent 25%),
+    radial-gradient(ellipse at 92% 55%,rgba(216,182,108,.09),transparent 25%),
+    linear-gradient(180deg,rgba(12,2,6,.04),rgba(18,3,9,.22) 48%,rgba(9,1,5,.95) 100%);
+}
+.j-page .j-hero::after{
+  inset:14px;
+  border-color:rgba(240,217,161,.32);
+  box-shadow:inset 0 0 110px rgba(216,182,108,.045),0 0 0 1px rgba(0,0,0,.12);
+}
+.j-page .j-hero .hero-inner{
+  width:min(92vw,1080px);
+  min-height:100svh;
+  padding:clamp(78px,9vh,100px) 0 clamp(28px,4vh,48px);
+}
+.j-page .j-hero .monogram{
+  position:relative;
+  width:58px;height:58px;flex-basis:58px;
+  margin-bottom:10px;
+  border-color:rgba(240,217,161,.62);
+  background:linear-gradient(145deg,rgba(255,255,255,.07),rgba(0,0,0,.22));
+  box-shadow:0 0 0 6px rgba(216,182,108,.035),0 14px 42px rgba(0,0,0,.25),0 0 28px rgba(216,182,108,.12);
+}
+.j-page .j-hero .monogram::before{
+  content:"";position:absolute;inset:-7px;border:1px solid rgba(216,182,108,.18);border-radius:50%;
+}
+.j-page .j-hero .couple-art{
+  width:min(94vw,800px);
+  min-height:clamp(250px,42vh,430px);
+  margin:clamp(5px,1.2vh,14px) auto 0;
+}
+.j-page .j-hero .couple-art::before,
+.j-page .j-hero .couple-art::after{
+  width:min(42%,360px);
+  height:clamp(245px,38vh,415px);
+  filter:drop-shadow(0 26px 32px rgba(0,0,0,.34));
+}
+/* Delicate ornamental branches frame the couple without competing with them. */
+.j-page .j-hero .couple-art::marker{display:none}
+.j-page .j-hero .hero-inner::before,
+.j-page .j-hero .hero-inner::after{
+  content:"✦  ·  ✧";
+  width:130px;height:100px;
+  top:39%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:10px;letter-spacing:.35em;
+  color:rgba(240,217,161,.68);
+  opacity:.65;
+  text-shadow:0 0 24px rgba(216,182,108,.45);
+  animation:jHeroFloat 5s ease-in-out infinite;
+}
+.j-page .j-hero .hero-inner::before{left:-22px;transform:rotate(-8deg)}
+.j-page .j-hero .hero-inner::after{right:-22px;transform:rotate(8deg);animation-delay:1.8s}
+@keyframes jHeroFloat{0%,100%{opacity:.35;translate:0 0}50%{opacity:.78;translate:0 -7px}}
+.j-page .j-hero .eyebrow{
+  margin-top:clamp(5px,1vh,10px);
+  color:#f0d9a1;
+  letter-spacing:.34em;
+  font-size:.66rem;
+}
+.j-page .j-hero h1{
+  width:min(88vw,760px);
+  height:clamp(92px,10.5vw,138px);
+  margin:9px auto 9px;
+}
+.j-page .j-hero .j-ornament{margin:0 auto 8px}
+.j-page .j-hero .hero-date{
+  color:#f8ead9;
+  font-size:.88rem;
+  letter-spacing:.18em;
+}
+.j-page .j-hero .arabic{
+  color:#f0d9c2;
+  font-size:clamp(16px,1.6vw,21px);
+  text-shadow:0 3px 18px rgba(0,0,0,.25);
+}
+.j-page .j-hero .hero-copy{
+  max-width:580px;
+  color:rgba(255,247,239,.78);
+  font-size:14px;
+  line-height:1.9;
+}
+.j-page .j-hero .scroll-link{
+  position:relative;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-width:190px;
+  min-height:38px;
+  padding:8px 18px;
+  border:1px solid rgba(240,217,161,.28);
+  border-radius:999px;
+  background:rgba(255,255,255,.035);
+  color:#f3dfc5;
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+  box-shadow:0 10px 30px rgba(0,0,0,.16);
+  transition:transform .3s ease,border-color .3s ease,background .3s ease;
+}
+.j-page .j-hero .scroll-link:hover{transform:translateY(-2px);border-color:rgba(240,217,161,.6);background:rgba(255,255,255,.07)}
+.j-page .j-hero .scroll-link::after{
+  content:"";position:absolute;left:50%;bottom:-17px;width:1px;height:13px;background:linear-gradient(#d8b66c,transparent);opacity:.65;
+}
+@media(max-width:700px){
+  .j-page .j-hero::after{inset:9px}
+  .j-page .j-hero .hero-inner{width:91vw;padding:70px 0 24px}
+  .j-page .j-hero .monogram{width:48px;height:48px;flex-basis:48px;margin-bottom:7px}
+  .j-page .j-hero .couple-art{width:100vw;min-height:238px;margin-top:2px}
+  .j-page .j-hero .couple-art::before,
+  .j-page .j-hero .couple-art::after{width:48%;height:228px}
+  .j-page .j-hero .hero-inner::before,.j-page .j-hero .hero-inner::after{width:72px;height:60px;top:35%;font-size:7px}
+  .j-page .j-hero .hero-inner::before{left:-20px}.j-page .j-hero .hero-inner::after{right:-20px}
+  .j-page .j-hero h1{width:93vw;height:96px;margin:7px auto 8px}
+  .j-page .j-hero .hero-copy{max-width:320px;font-size:12.5px;line-height:1.82}
+  .j-page .j-hero .scroll-link{min-width:175px;min-height:36px;font-size:10.5px}
+}
+@media(max-height:720px) and (min-width:701px){
+  .j-page .j-hero .hero-inner{padding-top:62px;padding-bottom:18px}
+  .j-page .j-hero .couple-art{min-height:215px}
+  .j-page .j-hero .couple-art::before,.j-page .j-hero .couple-art::after{height:210px}
+  .j-page .j-hero h1{height:94px}
+}
+@media(prefers-reduced-motion:reduce){
+  .j-page .j-hero .hero-inner::before,.j-page .j-hero .hero-inner::after{animation:none}
+  .j-page .j-hero .scroll-link{transition:none}
+}
