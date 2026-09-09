@@ -2,6 +2,7 @@ import React from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './main.jsx';
 import WeddingFinalSections from './WeddingFinalSections.jsx';
+import './mobile-music.js';
 
 const root = document.getElementById('root');
 
