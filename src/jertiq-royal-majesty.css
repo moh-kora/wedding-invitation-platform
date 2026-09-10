@@ -1,222 +1,86 @@
-/* Mohamed & Laila — Royal Majesty inspired opening + hero layer.
-   Inspired by the reference's editorial invitation composition: tactile paper,
-   framed edges, diagonal gold cords, central wax-seal interaction and airy
-   ceremonial typography — while retaining the existing Sudanese burgundy,
-   ivory and champagne-gold palette.
+/* Royal Majesty visual reconstruction for Mohamed & Laila.
+   The reference was studied from the supplied screen recording:
+   1) tactile paper + crossed cords + central wax seal opening,
+   2) airy watercolor/editorial hero,
+   3) very restrained typography and large breathing space,
+   4) ceremonial artwork anchored near the bottom.
+   Palette remains the existing Sudanese burgundy / crimson / champagne gold / ivory.
 */
+:root{--royal-paper:#f8f3ec;--royal-paper-blue:#e9e6df;--royal-red:#6f1029;--royal-red-deep:#320714;--royal-gold:#d8b66c;--royal-champagne:#f0dfbd;--royal-ink:#2b1720}
 
-:root{
-  --royal-paper:#fbf7f0;
-  --royal-paper-2:#f2e7d7;
-  --royal-red:#6f1029;
-  --royal-red-deep:#2a0713;
-  --royal-gold:#d8b66c;
-  --royal-champagne:#f0dfbd;
-  --royal-ink:#2b1720;
-}
+/* =========================
+   01 — TAP TO OPEN
+   ========================= */
+body:has(.j-entry){overflow:hidden;background:var(--royal-paper)}
+.j-entry{position:fixed!important;inset:0!important;z-index:99999!important;overflow:hidden;display:grid!important;place-items:center;background-color:#eee6df!important;background-image:radial-gradient(circle at 18% 18%,rgba(111,16,41,.09),transparent 25%),radial-gradient(circle at 82% 82%,rgba(216,182,108,.13),transparent 28%),linear-gradient(135deg,#f6eee8 0%,#eee4df 48%,#f8f3ec 100%)!important;color:var(--royal-red)!important}
+/* handmade-paper grain */
+.j-entry::before{content:"";position:absolute;inset:-30%;opacity:.55;pointer-events:none;background-image:radial-gradient(circle,rgba(80,38,40,.10) 0 1px,transparent 1.5px),radial-gradient(circle,rgba(255,255,255,.7) 0 1px,transparent 1.6px);background-size:19px 19px,31px 31px;transform:rotate(7deg)}
+/* double editorial border */
+.j-entry::after{content:"";position:absolute;inset:12px;border:1px solid rgba(111,16,41,.20);box-shadow:inset 0 0 0 6px rgba(216,182,108,.07),inset 0 0 65px rgba(111,16,41,.05);pointer-events:none}
+/* crossed gold cords, intentionally visible like the reference */
+.j-entry-glow{position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle at 50% 50%,rgba(216,182,108,.18),transparent 26%)}
+.j-entry-glow::before,.j-entry-glow::after{content:"";position:absolute;left:50%;top:-15%;width:2px;height:130%;background:linear-gradient(transparent 0%,rgba(216,182,108,.15) 8%,rgba(216,182,108,.82) 32%,rgba(240,223,189,.95) 50%,rgba(216,182,108,.82) 68%,rgba(216,182,108,.15) 92%,transparent 100%);box-shadow:0 0 7px rgba(216,182,108,.30)}
+.j-entry-glow::before{transform:rotate(24deg)}.j-entry-glow::after{transform:rotate(-24deg)}
+/* subtle botanical embossing */
+.j-entry-glow{isolation:isolate}.j-entry-glow::marker{display:none}
+.j-entry-glow{background-image:radial-gradient(ellipse at 12% 12%,rgba(111,16,41,.08) 0 3%,transparent 3.5%),radial-gradient(ellipse at 88% 88%,rgba(111,16,41,.08) 0 3%,transparent 3.5%),radial-gradient(ellipse at 8% 55%,rgba(216,182,108,.10) 0 4%,transparent 4.5%),radial-gradient(ellipse at 92% 42%,rgba(216,182,108,.10) 0 4%,transparent 4.5%)}
+/* hide the old text composition — the reference uses the seal itself as the CTA */
+.j-entry-inner{position:relative;z-index:3;width:100%;height:100%;min-height:0;padding:0!important;display:grid!important;place-items:center!important}
+.j-entry-inner::before,.j-entry-inner::after,.j-entry-monogram,.j-entry-line,.j-entry-kicker,.j-entry-inner h1,.j-entry-ar{display:none!important}
+.j-entry-button{position:relative!important;width:142px!important;height:142px!important;min-height:142px!important;padding:0!important;border-radius:50%!important;border:0!important;background:radial-gradient(circle at 35% 27%,#9a3550 0%,#791c38 38%,#5d0e27 72%,#420818 100%)!important;color:#fff8ed!important;display:grid!important;place-items:center!important;cursor:pointer;transform:none!important;box-shadow:0 0 0 5px rgba(216,182,108,.22),0 2px 0 rgba(255,255,255,.55),0 20px 45px rgba(70,18,31,.22),inset 0 0 0 2px rgba(240,223,189,.72),inset 0 0 28px rgba(0,0,0,.16)!important;transition:transform .35s ease,box-shadow .35s ease!important;clip-path:polygon(50% 0%,61% 4%,71% 2%,79% 9%,90% 11%,92% 22%,99% 30%,96% 42%,100% 51%,96% 61%,98% 72%,90% 80%,88% 91%,77% 92%,69% 99%,58% 96%,49% 100%,39% 96%,29% 99%,22% 91%,11% 90%,9% 80%,2% 72%,4% 61%,0% 51%,4% 42%,1% 30%,8% 22%,10% 11%,21% 9%,29% 2%,39% 4%)}
+.j-entry-button::before{content:"✦";position:absolute;top:25px;font-size:12px;color:var(--royal-gold);z-index:2}
+.j-entry-button::after{content:"";position:absolute;inset:12px;border:1px solid rgba(240,223,189,.55);border-radius:50%;box-shadow:inset 0 0 0 1px rgba(216,182,108,.18)}
+.j-entry-button span{position:relative;z-index:3;font-family:Georgia,"Times New Roman",serif!important;font-size:14px!important;line-height:1.25!important;letter-spacing:.18em!important;text-transform:uppercase;color:#fff9ef!important;text-align:center;max-width:84px}
+.j-entry-button small{display:none!important}
+.j-entry-button:hover{transform:scale(1.035)!important;box-shadow:0 0 0 7px rgba(216,182,108,.22),0 24px 55px rgba(70,18,31,.27),inset 0 0 0 2px rgba(240,223,189,.78)!important}
+.j-entry.is-leaving{animation:royalSealOut .85s cubic-bezier(.72,0,.18,1) forwards!important}
+@keyframes royalSealOut{0%{opacity:1;transform:scale(1)}55%{opacity:1;transform:scale(1.08)}100%{opacity:0;transform:scale(1.18);filter:blur(5px)}}
 
-/* ENTRY / TAP-TO-OPEN */
-body:has(.j-entry){overflow:hidden}
-.j-entry{
-  position:fixed!important;
-  inset:0!important;
-  z-index:99999!important;
-  overflow:hidden;
-  display:grid!important;
-  place-items:center;
-  background:
-    radial-gradient(circle at 50% 45%,rgba(240,223,189,.16),transparent 34%),
-    linear-gradient(145deg,#2b0714 0%,#5d0e25 48%,#21050f 100%)!important;
-  color:var(--royal-paper)!important;
-}
-.j-entry::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  opacity:.22;
-  background-image:
-    radial-gradient(circle at 20% 20%,rgba(255,255,255,.22) 0 1px,transparent 1.5px),
-    radial-gradient(circle at 70% 70%,rgba(216,182,108,.2) 0 1px,transparent 1.5px);
-  background-size:18px 18px,27px 27px;
-  mix-blend-mode:soft-light;
-  pointer-events:none;
-}
-.j-entry::after{
-  content:"";
-  position:absolute;
-  inset:16px;
-  border:1px solid rgba(240,223,189,.38);
-  box-shadow:inset 0 0 0 7px rgba(216,182,108,.035),inset 0 0 90px rgba(0,0,0,.14);
-  pointer-events:none;
-}
-.j-entry-glow{position:absolute;inset:0;background:radial-gradient(circle at 50% 50%,rgba(216,182,108,.15),transparent 32%);pointer-events:none}
-.j-entry-ornament{position:absolute;top:28px;left:50%;transform:translateX(-50%);color:var(--royal-gold);font-size:18px;letter-spacing:.5em;opacity:.75}
-.j-entry-inner{
-  position:relative;
-  z-index:2;
-  width:min(88vw,520px);
-  min-height:min(78vh,680px);
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-  padding:46px 28px;
-}
-.j-entry-inner::before,.j-entry-inner::after{
-  content:"";
-  position:absolute;
-  top:0;bottom:0;
-  width:1px;
-  background:linear-gradient(transparent,rgba(216,182,108,.65) 16%,rgba(216,182,108,.65) 84%,transparent);
-  opacity:.65;
-}
-.j-entry-inner::before{left:2px}.j-entry-inner::after{right:2px}
-.j-entry-monogram{
-  font-family:Georgia,serif;
-  font-size:clamp(25px,6vw,38px);
-  letter-spacing:.16em;
-  color:var(--royal-champagne);
-  margin-bottom:14px;
-}
-.j-entry-monogram span{color:var(--royal-gold);font-size:.7em;margin:0 .12em}
-.j-entry-line{width:74px;height:1px;background:linear-gradient(90deg,transparent,var(--royal-gold),transparent);margin-bottom:22px}
-.j-entry-kicker{
-  margin:0 0 13px!important;
-  font-family:Georgia,serif;
-  font-size:11px!important;
-  text-transform:uppercase;
-  letter-spacing:.3em;
-  color:rgba(240,223,189,.8)!important;
-}
-.j-entry-inner h1{
-  margin:0!important;
-  font-family:Georgia,serif!important;
-  font-weight:400!important;
-  font-size:clamp(38px,10vw,68px)!important;
-  line-height:1.05!important;
-  letter-spacing:.01em;
-  color:#fffaf3!important;
-  text-shadow:0 8px 35px rgba(0,0,0,.24);
-}
-.j-entry-inner h1 span{color:var(--royal-gold);font-style:italic}
-.j-entry-ar{margin:15px 0 38px!important;color:#f0d9c2!important;font-size:18px!important;direction:rtl}
-.j-entry-button{
-  position:relative;
-  width:118px!important;height:118px!important;
-  min-height:118px!important;
-  border-radius:50%!important;
-  border:2px solid rgba(240,223,189,.72)!important;
-  background:
-    radial-gradient(circle at 35% 30%,rgba(255,255,255,.13),transparent 38%),
-    radial-gradient(circle at 60% 65%,#7f1735,#510c22 68%,#3a0818)!important;
-  color:#fff7ea!important;
-  box-shadow:0 0 0 8px rgba(216,182,108,.07),0 20px 60px rgba(0,0,0,.35),inset 0 0 0 1px rgba(0,0,0,.28)!important;
-  display:flex!important;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  gap:5px;
-  cursor:pointer;
-  transform:rotate(-2deg);
-  transition:transform .35s ease,box-shadow .35s ease;
-}
-.j-entry-button::before{content:"✦";position:absolute;top:10px;font-size:11px;color:var(--royal-gold)}
-.j-entry-button::after{content:"";position:absolute;inset:7px;border:1px solid rgba(240,223,189,.3);border-radius:50%}
-.j-entry-button:hover{transform:rotate(0deg) scale(1.035);box-shadow:0 0 0 10px rgba(216,182,108,.08),0 25px 70px rgba(0,0,0,.42),inset 0 0 0 1px rgba(0,0,0,.28)!important}
-.j-entry-button span{font-family:Georgia,serif;font-size:12px!important;letter-spacing:.18em;text-transform:uppercase}
-.j-entry-button small{font-family:Georgia,serif;font-size:9px!important;letter-spacing:.1em;color:rgba(240,223,189,.78)}
-.j-entry.is-leaving{animation:royalEntryOut .85s cubic-bezier(.7,0,.2,1) forwards}
-@keyframes royalEntryOut{to{opacity:0;transform:scale(1.035);filter:blur(3px)}}
-
-/* Diagonal ceremonial cords — a direct visual echo of the reference, recolored. */
-.j-entry-inner > .j-entry-line::before{content:""}
-.j-entry-inner::marker{display:none}
-.j-entry .j-entry-glow::before,.j-entry .j-entry-glow::after{
-  content:"";position:absolute;top:-10%;height:120%;width:2px;
-  background:linear-gradient(transparent,rgba(216,182,108,.8) 18%,rgba(240,223,189,.5) 50%,rgba(216,182,108,.8) 82%,transparent);
-  box-shadow:0 0 12px rgba(216,182,108,.16);
-}
-.j-entry .j-entry-glow::before{left:16%;transform:rotate(24deg)}
-.j-entry .j-entry-glow::after{right:16%;transform:rotate(-24deg)}
-
-/* HERO — airy framed editorial composition */
-.j-page .j-hero{
-  background-color:var(--royal-paper)!important;
-  color:var(--royal-ink)!important;
-  isolation:isolate;
-}
-.j-page .j-hero::before{
-  background:
-    radial-gradient(ellipse at 50% 42%,rgba(216,182,108,.11),transparent 40%),
-    linear-gradient(180deg,rgba(255,252,247,.97),rgba(242,231,215,.9))!important;
-  opacity:1!important;
-}
-.j-page .j-hero::after{
-  inset:13px!important;
-  border:1px solid rgba(111,16,41,.2)!important;
-  box-shadow:inset 0 0 0 6px rgba(216,182,108,.055),inset 0 0 70px rgba(111,16,41,.05)!important;
-}
-.j-page .j-hero .hero-inner{position:relative;z-index:2;min-height:100svh;min-height:100dvh;padding-top:clamp(54px,7vh,78px)!important;padding-bottom:34px!important}
-.j-page .j-hero .hero-inner::before,.j-page .j-hero .hero-inner::after{
-  content:""!important;
-  position:absolute!important;
-  top:-8%!important;
-  height:116%!important;
-  width:1px!important;
-  background:linear-gradient(transparent,rgba(216,182,108,.62) 18%,rgba(216,182,108,.62) 82%,transparent)!important;
-  display:block!important;
-  opacity:.75!important;
-  box-shadow:none!important;
-  animation:none!important;
-  z-index:-1;
-}
-.j-page .j-hero .hero-inner::before{left:10%;transform:rotate(24deg)}
-.j-page .j-hero .hero-inner::after{right:10%;transform:rotate(-24deg)}
-.j-page .j-hero .monogram{
-  color:var(--royal-red)!important;
-  border-color:rgba(111,16,41,.35)!important;
-  background:rgba(255,255,255,.48)!important;
-  box-shadow:0 0 0 6px rgba(216,182,108,.07),0 12px 30px rgba(66,25,33,.08)!important;
-}
-.j-page .j-hero .monogram::before{border-color:rgba(216,182,108,.4)!important}
-.j-page .j-hero .eyebrow{color:var(--royal-red)!important;letter-spacing:.28em!important;margin-top:2px!important}
-.j-page .j-hero h1{
-  color:var(--royal-red)!important;
-  text-shadow:none!important;
-  margin:8px auto!important;
-}
-.j-page .j-hero h1 em{color:var(--royal-gold)!important}
-.j-page .j-hero .j-ornament{color:var(--royal-gold)!important}
-.j-page .j-hero .hero-date{color:var(--royal-ink)!important;letter-spacing:.14em!important}
-.j-page .j-hero .arabic{color:var(--royal-red)!important;text-shadow:none!important}
-.j-page .j-hero .hero-copy{color:rgba(43,23,32,.72)!important;max-width:510px!important}
-.j-page .j-hero .scroll-link{color:var(--royal-red)!important;border-color:rgba(111,16,41,.2)!important;background:rgba(255,255,255,.52)!important;box-shadow:0 10px 30px rgba(66,25,33,.08)!important}
+/* =========================
+   02 — HERO
+   ========================= */
+.j-page .j-hero{position:relative;isolation:isolate;overflow:hidden;min-height:100svh!important;min-height:100dvh!important;background:#f7f2eb!important;color:var(--royal-ink)!important}
+/* watercolor/paper atmosphere */
+.j-page .j-hero::before{content:"";position:absolute!important;inset:0!important;z-index:-2!important;opacity:1!important;background-color:#f7f2eb!important;background-image:url("/wedding-invitation-platform/royal-watercolor-frame.svg"),radial-gradient(ellipse at 50% 43%,rgba(255,255,255,.92),rgba(247,242,235,.25) 48%,rgba(111,16,41,.06) 100%)!important;background-repeat:no-repeat,no-repeat!important;background-size:cover,cover!important;background-position:center,center!important}
+/* softened inner frame */
+.j-page .j-hero::after{content:"";position:absolute!important;inset:11px!important;z-index:3!important;pointer-events:none!important;border:1px solid rgba(111,16,41,.16)!important;box-shadow:inset 0 0 0 6px rgba(216,182,108,.055),inset 0 0 70px rgba(111,16,41,.04)!important}
+.j-page .j-hero .hero-inner{position:relative!important;z-index:4!important;width:min(92vw,760px)!important;min-height:100svh!important;min-height:100dvh!important;margin:0 auto!important;padding:clamp(55px,7vh,82px) 18px 25px!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:flex-start!important;text-align:center!important}
+/* central soft watercolor wash */
+.j-page .j-hero .hero-inner::before{content:"";position:absolute;z-index:-1;width:min(78vw,570px);height:72%;top:13%;left:50%;transform:translateX(-50%);background:radial-gradient(ellipse,rgba(255,255,255,.88) 0%,rgba(255,255,255,.48) 44%,transparent 72%);filter:blur(5px);pointer-events:none}
+.j-page .j-hero .hero-inner::after{content:"";position:absolute;inset:3% 8%;z-index:-1;pointer-events:none;border-left:1px solid rgba(216,182,108,.24);border-right:1px solid rgba(216,182,108,.24)}
+/* reference has a tiny sound control at the top-right */
+.j-page .j-hero .monogram{order:0;width:46px!important;height:46px!important;margin:0 0 17px!important;border-radius:50%!important;display:grid!important;place-items:center!important;color:var(--royal-red)!important;border:1px solid rgba(111,16,41,.26)!important;background:rgba(255,250,244,.62)!important;box-shadow:0 6px 20px rgba(43,23,32,.08)!important;font-family:Georgia,serif!important;font-size:14px!important;letter-spacing:.04em}
+.j-page .j-hero .monogram::before{border-color:rgba(216,182,108,.45)!important}
+.j-page .j-hero .eyebrow{order:1;margin:0 0 7px!important;color:var(--royal-red)!important;font-family:Georgia,"Times New Roman",serif!important;font-size:10px!important;letter-spacing:.24em!important;text-transform:uppercase!important}
+.j-page .j-hero h1{order:2;margin:0!important;color:var(--royal-red)!important;font-family:"Bodoni 72","Didot",Georgia,serif!important;font-size:clamp(42px,10vw,74px)!important;font-weight:400!important;line-height:.96!important;letter-spacing:-.03em!important;text-shadow:none!important}
+.j-page .j-hero h1 em{color:var(--royal-gold)!important;font-style:normal!important;padding:0 .10em}
+.j-page .j-hero .j-ornament{order:3;margin:15px 0 11px!important;color:var(--royal-gold)!important}
+.j-page .j-hero .hero-date{order:4;margin:0!important;color:var(--royal-ink)!important;font-family:Georgia,"Times New Roman",serif!important;font-size:12px!important;letter-spacing:.14em!important;text-transform:uppercase!important}
+.j-page .j-hero .arabic{order:5;margin:12px 0 0!important;color:var(--royal-red)!important;font-size:15px!important;text-shadow:none!important;opacity:.85}
+.j-page .j-hero .hero-copy{order:6;max-width:360px!important;margin:15px auto 0!important;color:rgba(43,23,32,.68)!important;font-family:Georgia,"Times New Roman",serif!important;font-size:12px!important;line-height:1.75!important}
+.j-page .j-hero .couple-art{order:7!important;position:relative!important;width:100%!important;min-height:clamp(250px,37vh,400px)!important;margin:12px auto 0!important;flex:1 1 auto!important;display:flex!important;align-items:flex-end!important;justify-content:center!important}
+.j-page .j-hero .couple-art .art-halo{opacity:.30!important}
+.j-page .j-hero .couple-art::before,.j-page .j-hero .couple-art::after{filter:drop-shadow(0 22px 32px rgba(54,20,28,.10))!important}
+.j-page .j-hero .scroll-link{order:8;margin-top:auto!important;color:var(--royal-red)!important;border:0!important;background:transparent!important;box-shadow:none!important;font-family:Georgia,"Times New Roman",serif!important;font-size:10px!important;letter-spacing:.15em!important;text-transform:uppercase!important;text-decoration:none!important}
 .j-page .j-hero .scroll-link::after{background:linear-gradient(var(--royal-gold),transparent)!important}
-
-/* Couple illustration becomes the ceremonial lower focal point. */
-.j-page .j-hero .couple-art{order:3!important;margin-top:0!important;min-height:clamp(280px,42vh,430px)!important}
-.j-page .j-hero .couple-art .art-halo{opacity:.45}
-.j-page .j-hero .couple-art::before,.j-page .j-hero .couple-art::after{filter:drop-shadow(0 20px 30px rgba(54,20,28,.12))!important}
+/* keep the page quiet and remove the heavy dark treatment from older layers */
+.j-page .j-hero .j-pattern{opacity:.03!important}
 
 @media(max-width:700px){
-  .j-entry::after{inset:9px}
-  .j-entry-inner{min-height:80vh;width:88vw;padding:35px 18px}
-  .j-entry-inner::before,.j-entry-inner::after{opacity:.45}
-  .j-entry .j-entry-glow::before{left:8%;transform:rotate(20deg)}
-  .j-entry .j-entry-glow::after{right:8%;transform:rotate(-20deg)}
-  .j-entry-monogram{font-size:28px}
-  .j-entry-kicker{font-size:8.5px!important;letter-spacing:.22em}
-  .j-entry-inner h1{font-size:43px!important}
-  .j-entry-ar{font-size:16px!important;margin-bottom:32px!important}
-  .j-entry-button{width:108px!important;height:108px!important;min-height:108px!important}
-  .j-entry-button span{font-size:10px!important}
-  .j-entry-button small{font-size:8px!important}
-  .j-page .j-hero::after{inset:9px!important}
-  .j-page .j-hero .hero-inner{width:91vw!important;padding-top:62px!important}
-  .j-page .j-hero .hero-inner::before{left:5%;transform:rotate(18deg)}
-  .j-page .j-hero .hero-inner::after{right:5%;transform:rotate(-18deg)}
-  .j-page .j-hero .couple-art{min-height:245px!important}
-  .j-page .j-hero .hero-copy{font-size:12px!important;max-width:300px!important}
+ .j-entry::after{inset:8px}
+ .j-entry-button{width:128px!important;height:128px!important}
+ .j-entry-button span{font-size:12px!important;max-width:78px}
+ .j-page .j-hero::before{background-size:cover,cover!important}
+ .j-page .j-hero .hero-inner{width:100%!important;padding:48px 17px 22px!important}
+ .j-page .j-hero .monogram{width:40px!important;height:40px!important;margin-bottom:13px!important;font-size:12px!important}
+ .j-page .j-hero .eyebrow{font-size:8px!important;letter-spacing:.19em!important}
+ .j-page .j-hero h1{font-size:clamp(38px,12vw,58px)!important}
+ .j-page .j-hero .hero-copy{font-size:11px!important;max-width:300px!important;line-height:1.65!important}
+ .j-page .j-hero .couple-art{min-height:270px!important;margin-top:5px!important}
+ .j-page .j-hero .scroll-link{font-size:8px!important}
 }
-@media(prefers-reduced-motion:reduce){.j-entry.is-leaving{animation:none;opacity:0}.j-entry-button{transition:none}}
+@media(min-width:701px){
+ .j-entry-button{width:158px!important;height:158px!important}
+ .j-page .j-hero .couple-art{min-height:390px!important}
+}
+@media(prefers-reduced-motion:reduce){.j-entry.is-leaving{animation:none!important;opacity:0!important}.j-entry-button{transition:none!important}}
