@@ -33,6 +33,7 @@
     <link rel="stylesheet" href="/src/jertiq-premium-pass.css" />
     <link rel="stylesheet" href="/src/jertiq-luxury-final.css" />
     <link rel="stylesheet" href="/src/jertiq-experience-final.css" />
+    <link rel="stylesheet" href="/src/jertiq-royal-majesty.css" />
   </head>
   <body>
     <div id="root"></div>
@@ -41,65 +42,46 @@
         const track='https://soundcloud.com/girlssongs/adeelah-ya-baidah?si=5285f611b0b34086ad9c44d0cf5ae5af&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing';
         const embed='https://w.soundcloud.com/player/?url='+encodeURIComponent(track)+'&color=%238e1832&auto_play=true&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false&visual=false';
         let frame=null;
-        function post(method){
-          if(!frame || !frame.contentWindow)return;
-          try{frame.contentWindow.postMessage(JSON.stringify({method:method}),'*')}catch(e){}
-        }
+        function post(method){if(!frame||!frame.contentWindow)return;try{frame.contentWindow.postMessage(JSON.stringify({method:method}),'*')}catch(e){}}
         function music(){
           if(document.querySelector('.sc-music-shell')){frame=document.querySelector('.sc-music-embed');return;}
-          const shell=document.createElement('div');
-          shell.className='sc-music-shell';
-          shell.setAttribute('aria-hidden','true');
+          const shell=document.createElement('div');shell.className='sc-music-shell';shell.setAttribute('aria-hidden','true');
           shell.innerHTML='<iframe class="sc-music-embed" title="Wedding music" allow="autoplay" loading="eager" src="'+embed+'"></iframe>';
-          document.body.appendChild(shell);
-          frame=shell.querySelector('.sc-music-embed');
-          frame.addEventListener('load',function(){
-            post('play');
-            setTimeout(function(){post('play')},700);
-            setTimeout(function(){post('play')},1800);
-          });
+          document.body.appendChild(shell);frame=shell.querySelector('.sc-music-embed');
+          frame.addEventListener('load',function(){post('play');setTimeout(function(){post('play')},700);setTimeout(function(){post('play')},1800)});
         }
-        function keepPlaying(){
-          music();
-          post('play');
-        }
+        function keepPlaying(){music();post('play')}
         function enter(){
           const splash=document.querySelector('.j-entry');if(!splash)return;
-          keepPlaying();
-          document.body.classList.add('j-opened');
-          splash.classList.add('is-leaving');
-          setTimeout(function(){splash.remove();},900);
+          keepPlaying();document.body.classList.add('j-opened');splash.classList.add('is-leaving');
+          setTimeout(function(){splash.remove()},900);
         }
         function entrance(){
           if(document.querySelector('.j-entry'))return;
           const splash=document.createElement('div');splash.className='j-entry';
-          splash.innerHTML='<div class="j-entry-glow"></div><div class="j-entry-ornament">✦</div><div class="j-entry-inner"><div class="j-entry-monogram">M <span>&</span> L</div><div class="j-entry-line"></div><p class="j-entry-kicker">A Sudanese Jertiq Celebration</p><h1>Mohamed <span>&</span> Laila</h1><p class="j-entry-ar">محمد وليلي</p><button class="j-entry-button"><span>Open Invitation</span><small>Tap to enter</small></button></div></div>';
+          splash.innerHTML='<div class="j-entry-glow"></div><div class="j-entry-inner"><button class="j-entry-button" aria-label="Tap to Open"><span>Tap to Open</span><small>محمد &amp; ليلي</small></button></div>';
           document.body.appendChild(splash);
-          splash.addEventListener('click',enter,{once:true});
-          splash.querySelector('button').addEventListener('click',function(e){e.stopPropagation();enter();});
+          splash.querySelector('button').addEventListener('click',enter,{once:true});
         }
         function reveal(){
           const els=document.querySelectorAll('.j-page main section,.j-page .j-nav');
-          els.forEach(function(el,i){el.classList.add('j-reveal');el.style.setProperty('--reveal-delay',Math.min(i,8)*55+'ms');});
-          if(!window.__jertiqObserver){window.__jertiqObserver=new IntersectionObserver(function(entries,obs){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('is-visible');obs.unobserve(e.target);}})},{threshold:.12});}
-          els.forEach(function(el){window.__jertiqObserver.observe(el);});
+          els.forEach(function(el,i){el.classList.add('j-reveal');el.style.setProperty('--reveal-delay',Math.min(i,8)*55+'ms')});
+          if(!window.__jertiqObserver){window.__jertiqObserver=new IntersectionObserver(function(entries,obs){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('is-visible');obs.unobserve(e.target)}})},{threshold:.12})}
+          els.forEach(function(el){window.__jertiqObserver.observe(el)});
         }
         const ar={
-          'A Sudanese Jertiq Celebration':'احتفال جرتق سوداني أصيل','Open Invitation':'افتح الدعوة','Tap to enter':'اضغط للدخول','Wedding music':'موسيقى العرس','Playing':'الموسيقى شغالة','WITH LOVE & JOY':'بالمحبة والفرح','Back':'رجوع','Share':'مشاركة','Music':'الموسيقى',
+          'A Sudanese Jertiq Celebration':'احتفال جرتق سوداني أصيل','Open Invitation':'افتح الدعوة','Tap to enter':'اضغط للدخول','Tap to Open':'اضغط للفتح','Wedding music':'موسيقى العرس','Playing':'الموسيقى شغالة','WITH LOVE & JOY':'بالمحبة والفرح','Back':'رجوع','Share':'مشاركة','Music':'الموسيقى',
           'OUR JERTIQ CELEBRATION':'احتفال الجرتق السوداني','A celebration of love, family & Sudanese heritage.':'فرحة حب وأهل وتراث سوداني أصيل.','Discover our story ↓':'تعالوا نعيش حكايتنا مع بعض ↓','OUR LOVE STORY':'حكايتنا','From one moment to forever.':'من لحظة إلى عمر كامل.','The first meeting':'أول لقاء','The beginning':'البداية','The proposal':'الخطوبة','The wedding':'العرس',
           'A LITTLE SURPRISE':'مفاجأة صغيرة','Scratch to reveal our date':'اكشفوا عن تاريخ عرسنا','There is a little secret waiting beneath the gold.':'في مفاجأة صغيرة مستنياكم تحت الذهب.','SCRATCH ME':'احكوا البطاقة','Touch, drag or click to uncover':'المس، اسحب أو اضغط عشان تكشف التاريخ.','COUNTING THE MOMENTS':'بنعد اللحظات','Until we say “I do.”':'لحد ما نقول قبلنا.','Days':'يوم','Hours':'ساعة','Minutes':'دقيقة','Seconds':'ثانية',
           'OUR MOMENTS':'لحظاتنا','A few memories before forever.':'شوية ذكريات قبل العمر كله.','View memory':'شوف الذكرى','JOIN OUR CELEBRATION':'شاركونا فرحتنا','RSVP':'أكدوا حضوركم','Join our celebration':'شاركونا الاحتفال','Guest name':'اسم الضيف','Phone number':'رقم الهاتف','Attendance':'الحضور','Yes, I’ll be there':'أيوة، حأكون معاكم','Sorry, I can’t attend':'آسف، ما بقدر أحضر','Number of guests':'عدد الضيوف','Meal preference':'نوع الوجبة','Standard':'عادي','Vegetarian':'نباتي','Vegan':'نباتي بالكامل','Message':'رسالة','Send RSVP':'إرسال التأكيد','RSVP RECEIVED':'تم استلام التأكيد','Thank you':'شكراً ليكم','Done':'تم',
           'LEAVE A LITTLE LOVE':'خلّوا لينا كلمة حلوة','Our guestbook':'دفتر الأمنيات','Share a blessing, a memory or a few words for Mohamed & Laila.':'اكتبوا لينا دعوة حلوة أو ذكرى أو كلمة لمحمد وليلي.','Your name':'اسمك','Write your message…':'اكتب رسالتك…','Sign the guestbook':'سجّل كلمتك','GOOD TO KNOW':'معلومات مهمة','Frequently asked questions':'الأسئلة الشائعة','What time should guests arrive?':'متى يصل الضيوف؟','Where is the wedding?':'وين مكان العرس؟','Is parking available?':'هل في مواقف؟','What is the dress code?':'شنو اللبس المناسب؟','Can I bring an additional guest?':'ممكن أجيب ضيف إضافي؟','What are the wedding events?':'شنو فعاليات العرس؟','Are children welcome?':'الأطفال مرحب بيهم؟','Where can I find accommodation?':'وين ممكن أسكن؟'
         };
-        function bilingual(){const targets=document.querySelectorAll('.j-page h2,.j-page h3,.j-page p,.j-page button,.j-page .eyebrow,.j-entry p,.j-entry button');targets.forEach(function(el){if(el.querySelector('.j-bilingual-ar'))return;const text=(el.textContent||'').replace(/\s+/g,' ').trim();const arabic=ar[text];if(!arabic)return;const span=document.createElement('span');span.className='j-bilingual-ar';span.lang='ar';span.dir='rtl';span.textContent=arabic;el.appendChild(span);});}
-        music();
-        entrance();
-        reveal();
-        bilingual();
-        document.addEventListener('visibilitychange',function(){if(!document.hidden)setTimeout(keepPlaying,150);});
-        window.addEventListener('pageshow',function(){setTimeout(keepPlaying,150);});
-        document.addEventListener('pointerdown',function(){keepPlaying();},{passive:true,once:true});
-        new MutationObserver(function(){music();reveal();bilingual();}).observe(document.body,{childList:true,subtree:true});
+        function bilingual(){const targets=document.querySelectorAll('.j-page h2,.j-page h3,.j-page p,.j-page button,.j-page .eyebrow,.j-entry p,.j-entry button');targets.forEach(function(el){if(el.querySelector('.j-bilingual-ar'))return;const text=(el.textContent||'').replace(/\s+/g,' ').trim();const arabic=ar[text];if(!arabic)return;const span=document.createElement('span');span.className='j-bilingual-ar';span.lang='ar';span.dir='rtl';span.textContent=arabic;el.appendChild(span)})}
+        music();entrance();reveal();bilingual();
+        document.addEventListener('visibilitychange',function(){if(!document.hidden)setTimeout(keepPlaying,150)});
+        window.addEventListener('pageshow',function(){setTimeout(keepPlaying,150)});
+        document.addEventListener('pointerdown',function(){keepPlaying()},{passive:true,once:true});
+        new MutationObserver(function(){music();reveal();bilingual()}).observe(document.body,{childList:true,subtree:true});
       })();
     </script>
     <script type="module" src="/src/entry.jsx"></script>
