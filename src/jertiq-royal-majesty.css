@@ -1,0 +1,222 @@
+/* Mohamed & Laila — Royal Majesty inspired opening + hero layer.
+   Inspired by the reference's editorial invitation composition: tactile paper,
+   framed edges, diagonal gold cords, central wax-seal interaction and airy
+   ceremonial typography — while retaining the existing Sudanese burgundy,
+   ivory and champagne-gold palette.
+*/
+
+:root{
+  --royal-paper:#fbf7f0;
+  --royal-paper-2:#f2e7d7;
+  --royal-red:#6f1029;
+  --royal-red-deep:#2a0713;
+  --royal-gold:#d8b66c;
+  --royal-champagne:#f0dfbd;
+  --royal-ink:#2b1720;
+}
+
+/* ENTRY / TAP-TO-OPEN */
+body:has(.j-entry){overflow:hidden}
+.j-entry{
+  position:fixed!important;
+  inset:0!important;
+  z-index:99999!important;
+  overflow:hidden;
+  display:grid!important;
+  place-items:center;
+  background:
+    radial-gradient(circle at 50% 45%,rgba(240,223,189,.16),transparent 34%),
+    linear-gradient(145deg,#2b0714 0%,#5d0e25 48%,#21050f 100%)!important;
+  color:var(--royal-paper)!important;
+}
+.j-entry::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  opacity:.22;
+  background-image:
+    radial-gradient(circle at 20% 20%,rgba(255,255,255,.22) 0 1px,transparent 1.5px),
+    radial-gradient(circle at 70% 70%,rgba(216,182,108,.2) 0 1px,transparent 1.5px);
+  background-size:18px 18px,27px 27px;
+  mix-blend-mode:soft-light;
+  pointer-events:none;
+}
+.j-entry::after{
+  content:"";
+  position:absolute;
+  inset:16px;
+  border:1px solid rgba(240,223,189,.38);
+  box-shadow:inset 0 0 0 7px rgba(216,182,108,.035),inset 0 0 90px rgba(0,0,0,.14);
+  pointer-events:none;
+}
+.j-entry-glow{position:absolute;inset:0;background:radial-gradient(circle at 50% 50%,rgba(216,182,108,.15),transparent 32%);pointer-events:none}
+.j-entry-ornament{position:absolute;top:28px;left:50%;transform:translateX(-50%);color:var(--royal-gold);font-size:18px;letter-spacing:.5em;opacity:.75}
+.j-entry-inner{
+  position:relative;
+  z-index:2;
+  width:min(88vw,520px);
+  min-height:min(78vh,680px);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:46px 28px;
+}
+.j-entry-inner::before,.j-entry-inner::after{
+  content:"";
+  position:absolute;
+  top:0;bottom:0;
+  width:1px;
+  background:linear-gradient(transparent,rgba(216,182,108,.65) 16%,rgba(216,182,108,.65) 84%,transparent);
+  opacity:.65;
+}
+.j-entry-inner::before{left:2px}.j-entry-inner::after{right:2px}
+.j-entry-monogram{
+  font-family:Georgia,serif;
+  font-size:clamp(25px,6vw,38px);
+  letter-spacing:.16em;
+  color:var(--royal-champagne);
+  margin-bottom:14px;
+}
+.j-entry-monogram span{color:var(--royal-gold);font-size:.7em;margin:0 .12em}
+.j-entry-line{width:74px;height:1px;background:linear-gradient(90deg,transparent,var(--royal-gold),transparent);margin-bottom:22px}
+.j-entry-kicker{
+  margin:0 0 13px!important;
+  font-family:Georgia,serif;
+  font-size:11px!important;
+  text-transform:uppercase;
+  letter-spacing:.3em;
+  color:rgba(240,223,189,.8)!important;
+}
+.j-entry-inner h1{
+  margin:0!important;
+  font-family:Georgia,serif!important;
+  font-weight:400!important;
+  font-size:clamp(38px,10vw,68px)!important;
+  line-height:1.05!important;
+  letter-spacing:.01em;
+  color:#fffaf3!important;
+  text-shadow:0 8px 35px rgba(0,0,0,.24);
+}
+.j-entry-inner h1 span{color:var(--royal-gold);font-style:italic}
+.j-entry-ar{margin:15px 0 38px!important;color:#f0d9c2!important;font-size:18px!important;direction:rtl}
+.j-entry-button{
+  position:relative;
+  width:118px!important;height:118px!important;
+  min-height:118px!important;
+  border-radius:50%!important;
+  border:2px solid rgba(240,223,189,.72)!important;
+  background:
+    radial-gradient(circle at 35% 30%,rgba(255,255,255,.13),transparent 38%),
+    radial-gradient(circle at 60% 65%,#7f1735,#510c22 68%,#3a0818)!important;
+  color:#fff7ea!important;
+  box-shadow:0 0 0 8px rgba(216,182,108,.07),0 20px 60px rgba(0,0,0,.35),inset 0 0 0 1px rgba(0,0,0,.28)!important;
+  display:flex!important;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:5px;
+  cursor:pointer;
+  transform:rotate(-2deg);
+  transition:transform .35s ease,box-shadow .35s ease;
+}
+.j-entry-button::before{content:"✦";position:absolute;top:10px;font-size:11px;color:var(--royal-gold)}
+.j-entry-button::after{content:"";position:absolute;inset:7px;border:1px solid rgba(240,223,189,.3);border-radius:50%}
+.j-entry-button:hover{transform:rotate(0deg) scale(1.035);box-shadow:0 0 0 10px rgba(216,182,108,.08),0 25px 70px rgba(0,0,0,.42),inset 0 0 0 1px rgba(0,0,0,.28)!important}
+.j-entry-button span{font-family:Georgia,serif;font-size:12px!important;letter-spacing:.18em;text-transform:uppercase}
+.j-entry-button small{font-family:Georgia,serif;font-size:9px!important;letter-spacing:.1em;color:rgba(240,223,189,.78)}
+.j-entry.is-leaving{animation:royalEntryOut .85s cubic-bezier(.7,0,.2,1) forwards}
+@keyframes royalEntryOut{to{opacity:0;transform:scale(1.035);filter:blur(3px)}}
+
+/* Diagonal ceremonial cords — a direct visual echo of the reference, recolored. */
+.j-entry-inner > .j-entry-line::before{content:""}
+.j-entry-inner::marker{display:none}
+.j-entry .j-entry-glow::before,.j-entry .j-entry-glow::after{
+  content:"";position:absolute;top:-10%;height:120%;width:2px;
+  background:linear-gradient(transparent,rgba(216,182,108,.8) 18%,rgba(240,223,189,.5) 50%,rgba(216,182,108,.8) 82%,transparent);
+  box-shadow:0 0 12px rgba(216,182,108,.16);
+}
+.j-entry .j-entry-glow::before{left:16%;transform:rotate(24deg)}
+.j-entry .j-entry-glow::after{right:16%;transform:rotate(-24deg)}
+
+/* HERO — airy framed editorial composition */
+.j-page .j-hero{
+  background-color:var(--royal-paper)!important;
+  color:var(--royal-ink)!important;
+  isolation:isolate;
+}
+.j-page .j-hero::before{
+  background:
+    radial-gradient(ellipse at 50% 42%,rgba(216,182,108,.11),transparent 40%),
+    linear-gradient(180deg,rgba(255,252,247,.97),rgba(242,231,215,.9))!important;
+  opacity:1!important;
+}
+.j-page .j-hero::after{
+  inset:13px!important;
+  border:1px solid rgba(111,16,41,.2)!important;
+  box-shadow:inset 0 0 0 6px rgba(216,182,108,.055),inset 0 0 70px rgba(111,16,41,.05)!important;
+}
+.j-page .j-hero .hero-inner{position:relative;z-index:2;min-height:100svh;min-height:100dvh;padding-top:clamp(54px,7vh,78px)!important;padding-bottom:34px!important}
+.j-page .j-hero .hero-inner::before,.j-page .j-hero .hero-inner::after{
+  content:""!important;
+  position:absolute!important;
+  top:-8%!important;
+  height:116%!important;
+  width:1px!important;
+  background:linear-gradient(transparent,rgba(216,182,108,.62) 18%,rgba(216,182,108,.62) 82%,transparent)!important;
+  display:block!important;
+  opacity:.75!important;
+  box-shadow:none!important;
+  animation:none!important;
+  z-index:-1;
+}
+.j-page .j-hero .hero-inner::before{left:10%;transform:rotate(24deg)}
+.j-page .j-hero .hero-inner::after{right:10%;transform:rotate(-24deg)}
+.j-page .j-hero .monogram{
+  color:var(--royal-red)!important;
+  border-color:rgba(111,16,41,.35)!important;
+  background:rgba(255,255,255,.48)!important;
+  box-shadow:0 0 0 6px rgba(216,182,108,.07),0 12px 30px rgba(66,25,33,.08)!important;
+}
+.j-page .j-hero .monogram::before{border-color:rgba(216,182,108,.4)!important}
+.j-page .j-hero .eyebrow{color:var(--royal-red)!important;letter-spacing:.28em!important;margin-top:2px!important}
+.j-page .j-hero h1{
+  color:var(--royal-red)!important;
+  text-shadow:none!important;
+  margin:8px auto!important;
+}
+.j-page .j-hero h1 em{color:var(--royal-gold)!important}
+.j-page .j-hero .j-ornament{color:var(--royal-gold)!important}
+.j-page .j-hero .hero-date{color:var(--royal-ink)!important;letter-spacing:.14em!important}
+.j-page .j-hero .arabic{color:var(--royal-red)!important;text-shadow:none!important}
+.j-page .j-hero .hero-copy{color:rgba(43,23,32,.72)!important;max-width:510px!important}
+.j-page .j-hero .scroll-link{color:var(--royal-red)!important;border-color:rgba(111,16,41,.2)!important;background:rgba(255,255,255,.52)!important;box-shadow:0 10px 30px rgba(66,25,33,.08)!important}
+.j-page .j-hero .scroll-link::after{background:linear-gradient(var(--royal-gold),transparent)!important}
+
+/* Couple illustration becomes the ceremonial lower focal point. */
+.j-page .j-hero .couple-art{order:3!important;margin-top:0!important;min-height:clamp(280px,42vh,430px)!important}
+.j-page .j-hero .couple-art .art-halo{opacity:.45}
+.j-page .j-hero .couple-art::before,.j-page .j-hero .couple-art::after{filter:drop-shadow(0 20px 30px rgba(54,20,28,.12))!important}
+
+@media(max-width:700px){
+  .j-entry::after{inset:9px}
+  .j-entry-inner{min-height:80vh;width:88vw;padding:35px 18px}
+  .j-entry-inner::before,.j-entry-inner::after{opacity:.45}
+  .j-entry .j-entry-glow::before{left:8%;transform:rotate(20deg)}
+  .j-entry .j-entry-glow::after{right:8%;transform:rotate(-20deg)}
+  .j-entry-monogram{font-size:28px}
+  .j-entry-kicker{font-size:8.5px!important;letter-spacing:.22em}
+  .j-entry-inner h1{font-size:43px!important}
+  .j-entry-ar{font-size:16px!important;margin-bottom:32px!important}
+  .j-entry-button{width:108px!important;height:108px!important;min-height:108px!important}
+  .j-entry-button span{font-size:10px!important}
+  .j-entry-button small{font-size:8px!important}
+  .j-page .j-hero::after{inset:9px!important}
+  .j-page .j-hero .hero-inner{width:91vw!important;padding-top:62px!important}
+  .j-page .j-hero .hero-inner::before{left:5%;transform:rotate(18deg)}
+  .j-page .j-hero .hero-inner::after{right:5%;transform:rotate(-18deg)}
+  .j-page .j-hero .couple-art{min-height:245px!important}
+  .j-page .j-hero .hero-copy{font-size:12px!important;max-width:300px!important}
+}
+@media(prefers-reduced-motion:reduce){.j-entry.is-leaving{animation:none;opacity:0}.j-entry-button{transition:none}}
