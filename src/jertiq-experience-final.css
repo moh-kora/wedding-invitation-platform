@@ -1,3 +1,5 @@
+@import './jertiq-royal-majesty.css';
+
 /* Mohamed & Laila — Final Wedding Experience polish */
 .j-page{scroll-behavior:smooth;overflow-x:hidden;background:#fbf7f0;color:#281018}
 .j-page ::selection{background:rgba(216,182,108,.32);color:#281018}
