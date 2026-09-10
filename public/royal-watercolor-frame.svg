@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1400">
+<defs>
+ <filter id="soft"><feTurbulence type="fractalNoise" baseFrequency=".012" numOctaves="3" seed="9" result="noise"/><feDisplacementMap in="SourceGraphic" in2="noise" scale="7"/></filter>
+ <linearGradient id="fade" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#6f1029" stop-opacity=".20"/><stop offset="1" stop-color="#d8b66c" stop-opacity=".08"/></linearGradient>
+</defs>
+<rect width="800" height="1400" fill="#fbf7f0"/>
+<g filter="url(#soft)" fill="none" stroke="#6f1029" stroke-width="2" stroke-opacity=".17">
+ <path d="M18 0 C115 120 35 235 105 340 S42 565 118 690 S38 900 110 1030 S40 1240 85 1400"/>
+ <path d="M782 0 C685 120 765 235 695 340 S758 565 682 690 S762 900 690 1030 S760 1240 715 1400"/>
+ <path d="M0 185 C75 110 135 150 155 220 C95 205 60 235 0 260"/>
+ <path d="M800 185 C725 110 665 150 645 220 C705 205 740 235 800 260"/>
+ <path d="M0 525 C85 430 145 475 170 555 C105 535 60 580 0 610"/>
+ <path d="M800 525 C715 430 655 475 630 555 C695 535 740 580 800 610"/>
+ <path d="M0 900 C90 810 155 855 180 935 C110 910 58 960 0 990"/>
+ <path d="M800 900 C710 810 645 855 620 935 C690 910 742 960 800 990"/>
+</g>
+<g fill="none" stroke="#d8b66c" stroke-opacity=".18" stroke-width="3">
+ <path d="M65 0 L250 410"/><path d="M735 0 L550 410"/>
+ <path d="M65 1400 L250 990"/><path d="M735 1400 L550 990"/>
+</g>
+<g stroke="#6f1029" stroke-opacity=".15" fill="none" stroke-width="2">
+ <path d="M70 115 Q105 55 140 115 M660 115 Q695 55 730 115"/>
+ <path d="M55 1140 Q100 1060 145 1140 M655 1140 Q700 1060 745 1140"/>
+ <path d="M88 165 q35 -55 70 0 q-35 55 -70 0 M642 165 q35 -55 70 0 q-35 55 -70 0"/>
+</g>
+<g fill="#d8b66c" fill-opacity=".10">
+ <ellipse cx="400" cy="680" rx="275" ry="360"/>
+ <ellipse cx="400" cy="690" rx="205" ry="275"/>
+</g>
+<g fill="#6f1029" fill-opacity=".10">
+ <path d="M0 0h92v48l-16 16-16-16-16 16-16-16-16 16-12-16z"/>
+ <path d="M800 0h-92v48l16 16 16-16 16 16 16-16 16 16 12-16z"/>
+ <path d="M0 1400h92v-48l-16-16-16 16-16-16-16 16-16-16-12 16z"/>
+ <path d="M800 1400h-92v-48l16-16 16 16 16-16 16 16 16-16 12 16z"/>
+</g>
+</svg>
